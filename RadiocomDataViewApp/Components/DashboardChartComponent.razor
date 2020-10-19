@@ -1,0 +1,15 @@
+﻿
+
+
+@if (!String.IsNullOrEmpty(ChartTitle))
+{
+<Container Fluid="true" Style="text-align:center" >
+	<Heading Size="HeadingSize.Is6">@ChartTitle</Heading>
+</Container>
+}
+<HorizontalBarChart @ref="Chart" TItem="int" OptionsObject="@ChartOptionsObj" Clicked="@(async (f) => await OnBarElementClick.InvokeAsync(f))" />
+
+
+@code{
+	private HorizontalBarChart<int> Chart;
+}
