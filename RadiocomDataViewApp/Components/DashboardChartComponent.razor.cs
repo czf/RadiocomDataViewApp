@@ -53,7 +53,7 @@ namespace RadiocomDataViewApp.Components
             IEnumerable<DashboardChartData> newDatas = GenerateChartDatas?.Invoke();
             Chart.Clear();
             Chart.AddLabel(newDatas.Select(x => x.Label).ToArray());
-
+            
             List<string> colors = new List<string>();
             for(int i = 0; i < newDatas.Count(); i++)
             {
