@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RadiocomDataViewApp.Clients;
 using RadiocomDataViewApp.Objects;
 
 namespace RadiocomDataViewApp.Interfaces
 {
     public interface IRadiocomDataAggregateDataClient
     {
-        List<ItemCount> GetMostPlayedSongs();
+        List<ItemCount> GetMostPlayedSongs(MostPlayedSongsTimeRange timeRange);
     }
 }

@@ -1,15 +1,22 @@
 ﻿
+<ChartComponentHeaderButtons />
 
-
+<br />
 @if (!String.IsNullOrEmpty(ChartTitle))
 {
-<Container Fluid="true" Style="text-align:center" >
-	<Heading Size="HeadingSize.Is6">@ChartTitle</Heading>
-</Container>
+	<Container Fluid="true" Style="text-align:center">
+		<Heading Size="HeadingSize.Is6">@ChartTitle</Heading>
+	</Container>
 }
-<HorizontalBarChart @ref="Chart" TItem="int" OptionsObject="@ChartOptionsObj" Clicked="@(async (f) => await OnBarElementClick.InvokeAsync(f))" />
+<HorizontalBarChart @ref="Chart" TItem="Test" OptionsObject="@ChartOptionsObj" Clicked="@OnBarElementClickedHandler" />
 
 
 @code{
-	private HorizontalBarChart<int> Chart;
+	private HorizontalBarChart<Test> Chart;
+
+	public class Test
+	{
+		public int X { get; set; }
+		public int DataId { get; set; }
+	}
 }

@@ -1,49 +1,44 @@
 {
-    "iisSettings": {
-        "windowsAuthentication": false,
-        "anonymousAuthentication": true,
-        "iisExpress": {
-            "applicationUrl": "http://localhost:60935",
-            "sslPort": 44309
-        },
-        "iis": {
-            "applicationUrl": "http://dev.radiocomview.com/",
-            "sslPort": 443
-        }
-
-
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://dev.radiocomview.com/",
+      "sslPort": 443
     },
+    "iisExpress": {
+      "applicationUrl": "http://localhost:60935",
+      "sslPort": 44309
+    }
+  },
   "profiles": {
     "IIS Express": {
-        "commandName": "IISExpress",
+      "commandName": "IISExpress",
       "launchBrowser": true,
-      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}"
     },
     "RadiocomDataViewApp": {
-        "commandName": "Project",
-        "launchBrowser": true,
-        "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-        "applicationUrl": "https://localhost:5001;http://localhost:5000",
-        "environmentVariables": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-        }
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}"
     },
     "IIS": {
         "commandName": "IIS",
-
         "launchBrowser": true,
-        "launchUrl": "http://dev.radiocomview.com/",
         "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-        //"applicationUrl": "https://dev.radiocomview.com/;http://dev.radiocomview.com/",
-        //"appUrl": "https://dev.radiocomview.com/",
+        "launchUrl": "http://dev.radiocomview.com/",
         "environmentVariables": {
-            //"ASPNETCORE_CONTENTROOT": "C:\\dev\\solutions\\RadiocomDataViewApp\\RadiocomDataViewApp",
-            //"ASPNETCORE_HTTPS_PORT": "44309",
-            "ASPNETCORE_ENVIRONMENT": "Development"
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "NO_PROXY": "dev.radiocomview.com"
         }
+
     }
   }
 }

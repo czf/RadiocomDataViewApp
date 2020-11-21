@@ -33,7 +33,8 @@ namespace RadiocomDataViewApp
 
             builder.Services.AddSingleton(sp => new EnvironmentService { IsDevelopment = builder.HostEnvironment.IsDevelopment() });
             builder.Services.AddSingleton<IRadiocomDataAggregateDataClient, MockRadiocomDataAggregateDataClient>();
-            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
 
             var host = builder.Build();
             host.Services
@@ -42,6 +43,14 @@ namespace RadiocomDataViewApp
                 
             await host.RunAsync();
         }
+
+        //public static temp()
+        //{
+
+        //    System.Security.Cryptography.SHA256Managed.
+        //    System.Security.Cryptography.SHA256.
+
+        //}
     }
     public class EnvironmentService
     {

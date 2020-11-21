@@ -8,28 +8,36 @@
 <div class="row">
 	<div class="col-md-6 col-sm-12 p-4">
 		@**@
+		dasdfasfasfdsa
+		
 
 
 		@*<Button Color="Color.Primary" @onclick="BarClick">Hover me</Button>*@
 
+
 		@*<Button Outline="true" Color="Color.Dark" Clicked="@(async () => await HandleRedraw())">Redraw</Button>*@
 		@*Margin="Margin.IsAuto.OnAll"*@
-	<Row>
-		<Column>
-			<Container Class="text-center" >
-				<Buttons><Button Active="true" Outline="true" Color="Color.Secondary">7 Days</Button><Button>3 Months</Button><Button>All Time</Button></Buttons>
-			</Container>
-			<br />
-			<DashboardChartComponent YAxisLabel="YLabel" GenerateChartDatas="TopPlayedSongs" ChartTitle="Top Played Songs" OnBarElementClick="ClickBar"/>
+		<Row>
+			<Column>
+				<CascadingValue Value="@HeaderButtons" Name="Buttons">
+					<CascadingValue Value="@HeaderButtonConfigs" Name="HeaderButtonConfigs">
+						<CascadingValue Value="@UsersIndex" Name="Users">
+							<DashboardChartComponent @ref="TopPlayedSongsChart"
+													 YAxisLabel="YLabel"
+													 GenerateChartDatas="TopPlayedSongs"
+													 ChartTitle="Top Played Songs"
+													 OnDashboardChartElementClick="ClickBar" />
+						</CascadingValue>
+					</CascadingValue>
+				</CascadingValue>
+			</Column>
+			<Column>
+				<Button Loading="true" Active="true" Color="Color.Primary">7 Days</Button><Button>3 Months</Button><Button>All Time</Button>
+				<DashboardChartComponent YAxisLabel="YLabel" GenerateChartDatas="TopPlayedSongs" ChartTitle="Top Played Artists" />
+			</Column>
+		</Row>
 
-		</Column>
-		<Column>
-			<Button Loading="true" Outline="true" Color="Color.Primary">7 Days</Button><Button>3 Months</Button><Button>All Time</Button>
-			<DashboardChartComponent YAxisLabel="YLabel" GenerateChartDatas="TopPlayedSongs" ChartTitle="Top Played Artits" />
-		</Column>
-	</Row>
-		
-		
+
 
 		@*<RadzenChart ColorScheme="ColorScheme.Divergent" @ref=chart @onclick="@((MouseEventArgs e) => logconsole(e, @chart))">
 			<RadzenBarSeries Data="@revenue" CategoryProperty="Quarter" ValueProperty="Revenue">

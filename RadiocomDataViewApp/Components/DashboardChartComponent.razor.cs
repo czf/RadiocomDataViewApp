@@ -9,6 +9,9 @@ using Blazorise.Sidebar;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Microsoft.CSharp;
+using Microsoft.AspNetCore.Components.Web;
+using RadiocomDataViewApp.Pages;
+
 namespace RadiocomDataViewApp.Components
 {
     public partial class DashboardChartComponent : ComponentBase
@@ -17,11 +20,12 @@ namespace RadiocomDataViewApp.Components
 
         private Object StandardTicks = new
         {
-            FontColor = "#fff",            
+            FontColor = "#fff",
             BeginAtZero = true
         };
 
         
+
         [Inject]
         public IJSRuntime JSRuntime { get; set; }
         [Inject]
@@ -44,9 +48,21 @@ namespace RadiocomDataViewApp.Components
         public string ScaleLabelFontColor { get; set; }
         [Parameter]
         public string AxisTicksFontColor { get; set; }
-
         [Parameter]
-        public EventCallback<ChartMouseEventArgs> OnBarElementClick { get; set; }
+        public Dictionary<string, EventCallback<MouseEventArgs>> ChartTimeFrames { get; set; }
+        [Parameter]
+        public EventCallback<DashboardChartMouseEventArgs> OnDashboardChartElementClick { get; set; }
+
+        private EventCallback<ChartMouseEventArgs> OnBarElementClick { get; set;}
+        private async Task OnBarElementClickedHandler(ChartMouseEventArgs args)
+        {
+            
+            DashboardChartMouseEventArgs chartMouseEventArgs = new DashboardChartMouseEventArgs(args.DatasetIndex, args.Index, args.Model);
+            chartMouseEventArgs.DatasetElement = CurrentDataset.Data[args.Index]; 
+            await OnDashboardChartElementClick.InvokeAsync(chartMouseEventArgs);
+            Console.WriteLine("here");
+            
+        }
 
         public void RefreshChartData()
         {
@@ -68,14 +84,15 @@ namespace RadiocomDataViewApp.Components
                 }
             }
 
-            BarChartDataset<int> newBarChartDataset = new BarChartDataset<int>()
+            BarChartDataset<Test> newBarChartDataset = new BarChartDataset<Test>()
             {
-                Data = newDatas.Select(x => x.Value).ToList(),
+                Data = newDatas.Select(x => new Test() { X = x.Value, DataId = x.DataId }).ToList(),
                 BackgroundColor = colors,
                 BorderColor = colors
             };
             newBarChartDataset.HoverBackgroundColor.Clear();
             newBarChartDataset.HoverBorderColor.Clear();
+            CurrentDataset = newBarChartDataset;
             Chart.AddDataSet(newBarChartDataset);
             Chart.Update();
         }
@@ -89,7 +106,7 @@ namespace RadiocomDataViewApp.Components
 
         public DashboardChartComponent()
         {
-            
+            #region chartOptions
             ChartOptionsObj = new
             {
                 Legend = new { Display = false },
@@ -130,22 +147,23 @@ namespace RadiocomDataViewApp.Components
             {
                 Scales = new Scales()
                 {
-                    YAxes = new List<Axis>() { new Axis() { Ticks = new AxeTicks() { FontColor = "#fff" }, ScaleLabel = new AxeScaleLabel() { FontColor = "#fff", Display = true, LabelString = "valueObj" } } },
-                    XAxes = new List<Axis>() { new Axis() { Ticks = new AxeTicks() { FontColor = "#fff" }, ScaleLabel = new AxeScaleLabel() { FontColor = "#fff", Display = true, LabelString = "dimension" } } },
+                    YAxes = new List<Axis>() { new Axis() { Ticks = new AxisTicks() { FontColor = "#fff" }, ScaleLabel = new AxisScaleLabel() { FontColor = "#fff", Display = true, LabelString = "valueObj" } } },
+                    XAxes = new List<Axis>() { new Axis() { Ticks = new AxisTicks() { FontColor = "#fff" }, ScaleLabel = new AxisScaleLabel() { FontColor = "#fff", Display = true, LabelString = "dimension" } } },
                 }
             };
+            #endregion
+ 
         }
 
         protected override bool ShouldRender()
         {
-
+            Console.WriteLine(Chart.Data != null && (Chart.Data.Datasets?.Any(x => x.Data?.Any() ?? false) ?? false) && base.ShouldRender());
             return Chart.Data != null && (Chart.Data.Datasets?.Any(x => x.Data?.Any() ?? false) ?? false) && base.ShouldRender();
         }
         private string GetScaleFontColor()
         => string.IsNullOrWhiteSpace(ScaleLabelFontColor) ?  "#fff" : ScaleLabelFontColor;
-    
+        protected BarChartDataset<Test> CurrentDataset { get; set; }
 
-    
 
         //private void BarClick(ChartMouseEventArgs args)
         //{
