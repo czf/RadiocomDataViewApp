@@ -11,6 +11,7 @@ using Microsoft.JSInterop;
 using Microsoft.CSharp;
 using Microsoft.AspNetCore.Components.Web;
 using RadiocomDataViewApp.Pages;
+using RadiocomDataViewApp.Objects;
 
 namespace RadiocomDataViewApp.Components
 {
@@ -84,9 +85,9 @@ namespace RadiocomDataViewApp.Components
                 }
             }
 
-            BarChartDataset<Test> newBarChartDataset = new BarChartDataset<Test>()
+            BarChartDataset<BarChartDatasetXValue> newBarChartDataset = new BarChartDataset<BarChartDatasetXValue>()
             {
-                Data = newDatas.Select(x => new Test() { X = x.Value, DataId = x.DataId }).ToList(),
+                Data = newDatas.Select(x => new BarChartDatasetXValue() { X = x.Value, DataId = x.DataId }).ToList(),
                 BackgroundColor = colors,
                 BorderColor = colors
             };
@@ -101,9 +102,9 @@ namespace RadiocomDataViewApp.Components
         //{
         //    ChartOptions result;
         //    Axis f = new Axis();
-            
-        //}
 
+        //}
+        private HorizontalBarChart<BarChartDatasetXValue> Chart;
         public DashboardChartComponent()
         {
             #region chartOptions
@@ -162,7 +163,7 @@ namespace RadiocomDataViewApp.Components
         }
         private string GetScaleFontColor()
         => string.IsNullOrWhiteSpace(ScaleLabelFontColor) ?  "#fff" : ScaleLabelFontColor;
-        protected BarChartDataset<Test> CurrentDataset { get; set; }
+        protected BarChartDataset<BarChartDatasetXValue> CurrentDataset { get; set; }
 
 
         //private void BarClick(ChartMouseEventArgs args)

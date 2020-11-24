@@ -1,70 +1,15 @@
 ﻿
-@if (Buttons?.Any() ?? false)
+@if (HeaderButtonConfigs != null && HeaderButtonConfigs.Any())
 {
 <Container Class="text-center">
 	<Buttons>
-		@{ int indx = 0;
-			if (ButtonStates != null && ButtonStates.Any())
+		@{
+			foreach (var config in HeaderButtonConfigs)
 			{
-
+				<Button Color="@config.ButtonColor" Active="@config.Active"  Loading="@config.Loading" @onclick="async (t) => { await InvokeButtonStateEvent(t, config.ButtonClickCallback, config); }">@config.Text</Button>
 			}
 		}
-	
-		@HeaderButtonConfigs.Count
-		@foreach (var config in HeaderButtonConfigs)
-		{
-			
-			<MyButton  @bind-Color="@config.ButtonColor" @bind-Active="@config.Active" @onclick="async (t)=> { await InvokeButtonStateEvent(t, config.ButtonClickCallback, config); }" >@config.Text 111</MyButton>
-			@*<Button  @bind-Color="@config.ButtonColor" @bind-Active="@config.Active" @onclick="async (t)=> { await InvokeButtonStateEvent(t, config.ButtonClickCallback, config); }" >@config.Text</Button>*@
-		}
-		12111
-		@if (false)
-		{
-			foreach (var kvp in Buttons)
-			{
-				int i = indx;
-				HeaderButtonState headerButtonState = new HeaderButtonState
-				{
-					ButtonColor = Color.Success
-				}; ButtonStatesCollection[i] = headerButtonState;
-				ButtonStatesCollection[i].ButtonColor = Color.Dark;
-			@*<Button  Active="@ButtonStatesCollection[i].Active"   @ref="@ButtonsList[i]" Outline="@ButtonStatesCollection[i].Outline" @onclick="((t) =>  InvokeButtonEvent(t,i,kvp.Value))" @bind-Color="(ButtonStatesCollection[i].ButtonColor)" >@kvp.Key</Button>*@
-			@*<Button  Active="@ButtonStatesCollection[i].Active"   @ref="@ButtonsList[i]" Outline="@ButtonStatesCollection[i].Outline" @onclick="((t) =>  InvokeButtonEvent(t,i,kvp.Value))" @bind-ElementId="@(this.ButtonStatesCollection[i].text)" >@kvp.Key </Button>*@
-
-			@*<Button @ref="@ButtonsList[i]" @bind-Color="@(headerButtonState.ButtonColor)" @bind-ElementId="@(this.text)">@kvp.Key</Button>*@
-				indx++;
-			}
-		}
-
 	</Buttons>
-	
-	@code {
-		public string text = "asdf";
-		private Color c = Color.Danger;
-		private int count = 0;
-
-		private void KeyHandler(KeyboardEventArgs e)
-		{
-			if (e.Key == "+")
-			{
-				count++;
-			}
-		}
-	}
-	<Tabs Pills="false">
-			<Items>
-				@{int indx = 0;}
-				@foreach (var kvp in Buttons)
-				{
-					int i = indx;
-					<Tab Color="Color.Secondary" @ref="TabsList[i]">@kvp.Key</Tab>
-				}
-			</Items>
-			<Content>
-				<TabPanel Name="panel">
-				</TabPanel>
-			</Content>
-		</Tabs>
 	<br />
 	<Button Color="Color.Secondary" Active="true">test</Button>
 	<br />
@@ -73,7 +18,3 @@
 
 }
 
-
-@code{
-	
-}

@@ -8,15 +8,11 @@
 		<Heading Size="HeadingSize.Is6">@ChartTitle</Heading>
 	</Container>
 }
-<HorizontalBarChart @ref="Chart" TItem="Test" OptionsObject="@ChartOptionsObj" Clicked="@OnBarElementClickedHandler" />
+<HorizontalBarChart @ref="Chart" TItem="BarChartDatasetXValue" OptionsObject="@ChartOptionsObj" Clicked="@OnBarElementClickedHandler" />
 
 
 @code{
-	private HorizontalBarChart<Test> Chart;
+	
 
-	public class Test
-	{
-		public int X { get; set; }
-		public int DataId { get; set; }
-	}
+
 }

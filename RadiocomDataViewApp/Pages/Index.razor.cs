@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using System.Threading;
 using System.Threading.Tasks;
 using Blazorise;
 using Blazorise.Charts;
@@ -33,33 +34,17 @@ namespace RadiocomDataViewApp.Pages
         public List<HeaderButtonState> HeaderButtonConfigs { get; set; }
         public Index()
         {
-            HeaderButtons.Add("!!!!7 Days", EventCallback.Factory.Create(this, () => ChangeChartTimeRange(MostPlayedSongsTimeRange.SevenDays)));
-            HeaderButtons.Add("!!!!3 Months", EventCallback.Factory.Create(this, () => ChangeChartTimeRange(MostPlayedSongsTimeRange.ThreeMonths)));
-            HeaderButtons.Add("!!!!All Time", EventCallback.Factory.Create(this, () => ChangeChartTimeRange(MostPlayedSongsTimeRange.AllTime)));
-
             HeaderButtonConfigs = new List<HeaderButtonState>()
             {
-                new HeaderButtonState(){Text = "7 Days", ButtonClickCallback = EventCallback.Factory.Create(this, () => ChangeChartTimeRange(MostPlayedSongsTimeRange.SevenDays))},
-                new HeaderButtonState(){Text = "3 Months", ButtonClickCallback = EventCallback.Factory.Create(this, () => ChangeChartTimeRange(MostPlayedSongsTimeRange.ThreeMonths))},
+                new HeaderButtonState(){Text = "7 Days",ButtonColor=Color.Secondary,Active=true, ButtonClickCallback = EventCallback.Factory.Create(this, () => ChangeChartTimeRange(MostPlayedSongsTimeRange.SevenDays))},
+                new HeaderButtonState(){Text = "3 Months", ButtonClickCallback = EventCallback.Factory.Create(this, async() => {await Task.Delay(5000); ChangeChartTimeRange(MostPlayedSongsTimeRange.ThreeMonths); }) } ,
                 new HeaderButtonState(){Text = "All Time", ButtonClickCallback = EventCallback.Factory.Create(this, () => ChangeChartTimeRange(MostPlayedSongsTimeRange.AllTime))}
             };
 
-            UsersIndex = new List<vUser>();
-            UsersIndex.Add(new vUser()
-            {
-                FirstName = "asdf",
-                LastName = "weq",
-                ShortId = "1234f"
-            });
-            UsersIndex.Add(new vUser()
-            {
-                FirstName = "qwerwq",
-                LastName = "43254",
-                ShortId = "grgre"
-            });
+
         }
 
-        public List<vUser> UsersIndex { get; set; }
+        
 
         //private void BarClick(ChartMouseEventArgs args)
         private void BarClick(MouseEventArgs args)
@@ -98,7 +83,7 @@ namespace RadiocomDataViewApp.Pages
 
         private void ClickBar(DashboardChartMouseEventArgs args)
         {
-            Test element = (Test)args.DatasetElement;
+            BarChartDatasetXValue element = (BarChartDatasetXValue)args.DatasetElement;
             NavManager.NavigateTo($"artistwork/{element.DataId}");
         }
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -109,14 +94,7 @@ namespace RadiocomDataViewApp.Pages
             }
         }
 
-        //private async Task HandleRedraw()
-        //{
-        //    await Chart.Clear();
-        //    await Chart.AddLabel(Labels);
-        //    await Chart.AddDataSet(GetChartDataset());
-        //    await Chart.Update();
 
-        //}
 
         BarChartDataset<double> GetChartDataset()
         {
@@ -165,10 +143,7 @@ namespace RadiocomDataViewApp.Pages
         private RenderFragment GenerateButton()
         {
             RenderFragment renderFragmentResult = new RenderFragment(GenerateButtonDelegateFunction);
-            
-            
-            return renderFragmentResult; //b => (b);
-
+            return renderFragmentResult; 
         }
         
         private void GenerateButtonDelegateFunction(RenderTreeBuilder builder)
@@ -205,15 +180,6 @@ namespace RadiocomDataViewApp.Pages
             => ChartColor.FromRgba(chartColor.R, chartColor.B, chartColor.G, chartColor.A);
         
     }
-    public class vUser
-    {
-        public string ShortId;
-        public string FirstName;
-        public string LastName;
-        public string UserName;
-        public string StaffType;
-        public string Token;
-        
-    }
+
 }
 
