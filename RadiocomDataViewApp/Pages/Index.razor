@@ -23,8 +23,18 @@
 				</CascadingValue>
 			</Column>
 			<Column>
-				<Button Loading="true" Active="true" Color="Color.Primary">7 Days</Button><Button>3 Months</Button><Button>All Time</Button>
-				<DashboardChartComponent YAxisLabel="YLabel" GenerateChartDatas="TopPlayedSongs" ChartTitle="Top Played Artists" />
+
+
+
+				<CascadingValue Value="@HeaderButtons" Name="Buttons">
+					<CascadingValue Value="@HeaderButtonConfigs" Name="HeaderButtonConfigs">
+						<DashboardChartComponent @ref="TopPlayedSongsChart"
+												 YAxisLabel="YLabel"
+												 GenerateChartDatas="TopPlayedSongs"
+												 ChartTitle="Top Played Artists"
+												 OnDashboardChartElementClick="ClickBar" />
+					</CascadingValue>
+				</CascadingValue>
 			</Column>
 
 		</Row>

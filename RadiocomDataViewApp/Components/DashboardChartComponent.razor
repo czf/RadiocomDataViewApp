@@ -5,7 +5,7 @@
 @if (!String.IsNullOrEmpty(ChartTitle))
 {
 	<Container Fluid="true" Style="text-align:center">
-		<Heading Size="HeadingSize.Is6">@ChartTitle</Heading>
+		<Heading Size="HeadingSize.Is6" Alignment="TextAlignment.None" >@ChartTitle</Heading>
 	</Container>
 }
 <HorizontalBarChart @ref="Chart" TItem="BarChartDatasetXValue" OptionsObject="@ChartOptionsObj" Clicked="@OnBarElementClickedHandler" />
