@@ -69,7 +69,7 @@ namespace RadiocomDataViewApp.Components
         {
             IEnumerable<DashboardChartData> newDatas = GenerateChartDatas?.Invoke();
             Chart.Clear();
-            Chart.AddLabel(newDatas.Select(x => x.Label).ToArray());
+            Chart.AddLabels(newDatas.Select(x => x.Label).ToArray());
             
             List<string> colors = new List<string>();
             for(int i = 0; i < newDatas.Count(); i++)
@@ -98,12 +98,6 @@ namespace RadiocomDataViewApp.Components
             Chart.Update();
         }
 
-        //public ChartOptions f()
-        //{
-        //    ChartOptions result;
-        //    Axis f = new Axis();
-
-        //}
         private HorizontalBarChart<BarChartDatasetXValue> Chart;
         public DashboardChartComponent()
         {
@@ -164,15 +158,6 @@ namespace RadiocomDataViewApp.Components
         private string GetScaleFontColor()
         => string.IsNullOrWhiteSpace(ScaleLabelFontColor) ?  "#fff" : ScaleLabelFontColor;
         protected BarChartDataset<BarChartDatasetXValue> CurrentDataset { get; set; }
-
-
-        //private void BarClick(ChartMouseEventArgs args)
-        //{
-
-        //    //ClickMenu();
-        //    Console.WriteLine("logging");
-        //    //await Task.CompletedTask; //OnMenuHamburgerClick.InvokeAsync(args); 
-        //}
 
         protected override void OnAfterRender(bool firstRender)
         {

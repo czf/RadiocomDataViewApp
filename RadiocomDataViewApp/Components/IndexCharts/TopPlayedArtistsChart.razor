@@ -1,0 +1,14 @@
+﻿@inject IRadiocomDataAggregateDataClient RadiocomDataAggregateDataClient ;
+@inject NavigationManager NavManager;
+
+@namespace RadiocomDataViewApp.Components.IndexCharts
+
+<CascadingValue Value="@HeaderButtonConfigs" Name="HeaderButtonConfigs">
+	<DashboardChartComponent @ref="Chart"
+							 YAxisLabel="YLabel"
+							 GenerateChartDatas="TopPlayedArtists"
+							 ChartTitle="Top Played Artists"
+							 OnDashboardChartElementClick="NavigateToArtistRouteOnBarClick" />
+</CascadingValue>
+
+

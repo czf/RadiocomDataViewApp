@@ -9,6 +9,8 @@ namespace RadiocomDataViewApp.Interfaces
 {
     public interface IRadiocomDataAggregateDataClient
     {
-        List<ItemCount> GetMostPlayedSongs(MostPlayedSongsTimeRange timeRange);
+        List<ItemCount> GetMostPlayedSongs(MostPlayedTimeRange timeRange);
+
+        List<ItemCount> GetMostPlayedArtists(MostPlayedTimeRange timeRange);
     }
 }

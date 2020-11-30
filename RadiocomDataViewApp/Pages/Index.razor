@@ -4,44 +4,38 @@
 @inject EnvironmentService env;
 @inject NavigationManager NavManager;
 @inject IRadiocomDataAggregateDataClient RadiocomDataAggregateDataClient ;
+@using RadiocomDataViewApp.Components.IndexCharts;
 
-<div class="row">
-	<div class="col-md-6 col-sm-12 p-4">
-		@**@
-		dasdfasfasfdsa
-	
-		<Row>
-			<Column>
-				<CascadingValue Value="@HeaderButtons" Name="Buttons">
-					<CascadingValue Value="@HeaderButtonConfigs" Name="HeaderButtonConfigs">
+	<div class="row">
+		<div class="col-md-6 col-sm-12 p-4">
+			@**@
+			dasdfasfasfdsa
+
+			<Row>
+				<Column>
+					
+					<TopPlayedSongsChart />
+				</Column>
+				<Column>
+					<TopPlayedArtistsChart />
+
+
+
+					@*<CascadingValue Value="@HeaderButtonConfigs" Name="HeaderButtonConfigs">
 							<DashboardChartComponent @ref="TopPlayedSongsChart"
 													 YAxisLabel="YLabel"
 													 GenerateChartDatas="TopPlayedSongs"
-													 ChartTitle="Top Played Songs"
+													 ChartTitle="Top Played Artists"
 													 OnDashboardChartElementClick="ClickBar" />
-						</CascadingValue>
-				</CascadingValue>
-			</Column>
-			<Column>
+						</CascadingValue>*@
 
+				</Column>
 
+			</Row>
 
-				<CascadingValue Value="@HeaderButtons" Name="Buttons">
-					<CascadingValue Value="@HeaderButtonConfigs" Name="HeaderButtonConfigs">
-						<DashboardChartComponent @ref="TopPlayedSongsChart"
-												 YAxisLabel="YLabel"
-												 GenerateChartDatas="TopPlayedSongs"
-												 ChartTitle="Top Played Artists"
-												 OnDashboardChartElementClick="ClickBar" />
-					</CascadingValue>
-				</CascadingValue>
-			</Column>
-
-		</Row>
-
+		</div>
 	</div>
-</div>
-<div>
+	<div>
 
-	<Tooltip Text="Hello tooltip"><p>@env.IsDevelopment</p></Tooltip>
-</div>
+		<Tooltip Text="Hello tooltip"><p>@env.IsDevelopment</p></Tooltip>
+	</div>

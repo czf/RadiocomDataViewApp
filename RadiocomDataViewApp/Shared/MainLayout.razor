@@ -2,27 +2,35 @@
 
 <Layout Sider="true">
 	
-	<NavMenu  @ref="Nav"/>
-	<LayoutContent>
-		<div class="main">
-			<div class="top-row px-4">
+	<LayoutSiderContentNavMenu  @ref="Nav"/>
+	<Layout>
+		<LayoutHeader Fixed="true">
+			<Bar Breakpoint="Breakpoint.Desktop" Background="Background.Primary" ThemeContrast="ThemeContrast.Light">
+				here is some text
+				@*<div class="top-row px-4">
 				<a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+			</div>*@
+			</Bar>
+		</LayoutHeader>
+		<LayoutContent>
+			<div class="main">
+				
+				<CascadingValue Value="ClickMenu">
+					<div class="content px-4">
+						@Body
+					</div>
+				</CascadingValue>
 			</div>
-			<CascadingValue Value="ClickMenu">
-				<div class="content px-4">
-					@Body
-				</div>
-			</CascadingValue>
-		</div>
-	</LayoutContent>
+		</LayoutContent>
+	</Layout>
 </Layout>
 
 @code{
-		NavMenu Nav;
-		[Parameter]
+	LayoutSiderContentNavMenu Nav;
+	[Parameter]
 	public Action ClickMenu { get; set; }
 	public MainLayout() {
 		ClickMenu = () => { Console.WriteLine("clicked here"); Nav.MenuHamburgerClick(); };
-		
+
 	}
 }

@@ -13,8 +13,10 @@ using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Web;
 using RadiocomDataViewApp.Clients;
 using RadiocomDataViewApp.Components;
+using RadiocomDataViewApp.Components.IndexCharts;
 using RadiocomDataViewApp.Interfaces;
 using RadiocomDataViewApp.Objects;
+
 using static RadiocomDataViewApp.Components.ChartComponentHeaderButtons;
 using static RadiocomDataViewApp.Components.DashboardChartComponent;
 
@@ -23,40 +25,32 @@ namespace RadiocomDataViewApp.Pages
     public partial class Index : ComponentBase
     {
 
-
-
-
         [CascadingParameter]
         public EventCallback OnMenuHamburgerClick { get; set; }
         [CascadingParameter]
         public Action ClickMenu { get; set; }
 
-        public List<HeaderButtonState> HeaderButtonConfigs { get; set; }
+        
         public Index()
         {
-            HeaderButtonConfigs = new List<HeaderButtonState>()
-            {
-                new HeaderButtonState(){Text = "7 Days",ButtonColor=Color.Secondary,Active=true, ButtonClickCallback = EventCallback.Factory.Create(this, () => ChangeChartTimeRange(MostPlayedSongsTimeRange.SevenDays))},
-                new HeaderButtonState(){Text = "3 Months", ButtonClickCallback = EventCallback.Factory.Create(this, async() => {await Task.Delay(5000); ChangeChartTimeRange(MostPlayedSongsTimeRange.ThreeMonths); }) } ,
-                new HeaderButtonState(){Text = "All Time", ButtonClickCallback = EventCallback.Factory.Create(this, () => ChangeChartTimeRange(MostPlayedSongsTimeRange.AllTime))}
-            };
+           
 
-
+         
         }
 
         
 
         //private void BarClick(ChartMouseEventArgs args)
-        private void BarClick(MouseEventArgs args)
-        {
+        //private void BarClick(MouseEventArgs args)
+        //{
 
-            ClickMenu();
-        }
-        private void BarClick2()
-        {
+        //    ClickMenu();
+        //}
+        //private void BarClick2()
+        //{
 
-            ClickMenu();
-        }
+        //    ClickMenu();
+        //}
 
 
         protected override Task OnParametersSetAsync()
@@ -74,12 +68,7 @@ namespace RadiocomDataViewApp.Pages
 
         }
 
-        private IEnumerable<DashboardChartData> TopPlayedSongs()
-        {
-            MostPlayedSongsTimeRange range = GetMostPlayedSongsTimeRange();
-            List<ItemCount> radioComData = RadiocomDataAggregateDataClient.GetMostPlayedSongs(range);
-            return radioComData.Select(x => new DashboardChartData() { Label = x.Name, Value = x.Count, DataId = x.ItemId });
-        }
+        
 
         private void ClickBar(DashboardChartMouseEventArgs args)
         {
@@ -134,7 +123,7 @@ namespace RadiocomDataViewApp.Pages
         }
 
 
-        private MostPlayedSongsTimeRange GetMostPlayedSongsTimeRange()
+        private MostPlayedTimeRange GetMostPlayedSongsTimeRange()
         {
             Console.WriteLine("");
             return MostPlayedSongsTimeRangeValue;
@@ -161,10 +150,10 @@ namespace RadiocomDataViewApp.Pages
         {
             return (b) => b.AddContent(sequence, text);
         }
-        private Dictionary<string, EventCallback> HeaderButtons = new Dictionary<string, EventCallback>();
+        
 
-        private MostPlayedSongsTimeRange MostPlayedSongsTimeRangeValue = MostPlayedSongsTimeRange.SevenDays;
-        private void ChangeChartTimeRange(MostPlayedSongsTimeRange mostPlayedSongsTimeRange)
+        private MostPlayedTimeRange MostPlayedSongsTimeRangeValue = MostPlayedTimeRange.SevenDays;
+        private void ChangeChartTimeRange(MostPlayedTimeRange mostPlayedSongsTimeRange)
         {
             Console.WriteLine("change range:" + mostPlayedSongsTimeRange);
             MostPlayedSongsTimeRangeValue = mostPlayedSongsTimeRange;

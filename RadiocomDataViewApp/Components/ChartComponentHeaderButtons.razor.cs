@@ -22,12 +22,12 @@ namespace RadiocomDataViewApp.Components
 
     public partial class ChartComponentHeaderButtons : ComponentBase
     {
-        private Dictionary<int, Button> ButtonsList { get; set; } = new Dictionary<int, Button>();
-        private Dictionary<int, Tab> TabsList { get; set; } = new Dictionary<int, Tab>();
+        //private Dictionary<int, Button> ButtonsList { get; set; } = new Dictionary<int, Button>();
+        //private Dictionary<int, Tab> TabsList { get; set; } = new Dictionary<int, Tab>();
 
         
-        [CascadingParameter(Name = nameof(ChartComponentHeaderButtons.Buttons))]
-        public Dictionary<string, EventCallback> Buttons { get; set; }
+        //[CascadingParameter(Name = nameof(ChartComponentHeaderButtons.Buttons))]
+        //public Dictionary<string, EventCallback> Buttons { get; set; }
 
         [CascadingParameter(Name = nameof(ChartComponentHeaderButtons.HeaderButtonConfigs))]
         public List<HeaderButtonState> HeaderButtonConfigs { get; set; }
@@ -54,7 +54,7 @@ namespace RadiocomDataViewApp.Components
         }
 
         
-        private Dictionary<int, HeaderButtonState> ButtonStates = new Dictionary<int, HeaderButtonState>();
+        
 
 
 

@@ -193,3 +193,6 @@ app {
         display: block;
     }
 }
+.b-layout-header-fixed{
+    z-index:2;
+}
