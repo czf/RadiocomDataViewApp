@@ -42,6 +42,21 @@
             console.log(b);
 
         }
+        (function () {
+            console.log("plugin");
+            Chart.plugins.register({
+				afterEvent: function (chartInstance, chartEvent) {
+                    var canvas = chartInstance.chart.canvas;
+
+                    //change cursor style to pointer when over element 
+                    var cursorStyle = 'default';
+                    if (chartInstance.getElementsAtEvent(chartEvent).length > 0) {
+                        cursorStyle = 'pointer';
+					}
+                    canvas.style.cursor = cursorStyle;
+                }
+            });
+        })();
     </script>
 </body>
 

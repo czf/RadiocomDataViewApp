@@ -4,19 +4,23 @@ using System.Threading.Tasks;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
 using RadiocomDataViewApp.Clients;
+using RadiocomDataViewApp.Interfaces;
 using RadiocomDataViewApp.Objects;
 
 namespace RadiocomDataViewApp.Components.IndexCharts
 {
     public partial class TopPlayedArtistsChart : ComponentBase
     {
+        [Inject]
+        public IRadiocomDataAggregateDataClient RadiocomDataAggregateDataClient { get; set; }
+
         public TopPlayedArtistsChart()
         {
             HeaderButtonConfigs = new List<HeaderButtonState>()
             {
-                new HeaderButtonState(){Text = "7 Days",ButtonColor=Color.Secondary,Active=true, ButtonClickCallback = EventCallback.Factory.Create(this, () => {ChartDataTimeRange = MostPlayedTimeRange.SevenDays; Chart.RefreshChartData();}) } ,
-                new HeaderButtonState(){Text = "3 Months", ButtonClickCallback = EventCallback.Factory.Create(this, async() => {await Task.Delay(5000); ChartDataTimeRange =MostPlayedTimeRange.ThreeMonths; Chart.RefreshChartData();}) } ,
-                new HeaderButtonState(){Text = "All Time", ButtonClickCallback = EventCallback.Factory.Create(this, () => {ChartDataTimeRange =MostPlayedTimeRange.AllTime; Chart.RefreshChartData();}) }
+                 new HeaderButtonState(){Text = "7 Days",ButtonColor=Color.Secondary,Active=true, ButtonClickCallback = EventCallback.Factory.Create(this, () => UpdateChartDataTimeRange(MostPlayedTimeRange.SevenDays)) } ,
+                new HeaderButtonState(){Text = "3 Months", ButtonClickCallback = EventCallback.Factory.Create(this, () => UpdateChartDataTimeRange(MostPlayedTimeRange.ThreeMonths)) } ,
+                new HeaderButtonState(){Text = "All Time", ButtonClickCallback = EventCallback.Factory.Create(this, () => UpdateChartDataTimeRange(MostPlayedTimeRange.AllTime)) }
             };
 
             ChartDataTimeRange = MostPlayedTimeRange.SevenDays;
@@ -27,7 +31,6 @@ namespace RadiocomDataViewApp.Components.IndexCharts
         private DashboardChartComponent Chart;
         private IEnumerable<DashboardChartData> TopPlayedArtists()
         {
-
             List<ItemCount> radioComData = RadiocomDataAggregateDataClient.GetMostPlayedArtists(ChartDataTimeRange);
             return radioComData.Select(x => new DashboardChartData() { Label = x.Name, Value = x.Count, DataId = x.ItemId });
         }
@@ -36,6 +39,11 @@ namespace RadiocomDataViewApp.Components.IndexCharts
         {
             BarChartDatasetXValue element = (BarChartDatasetXValue)args.DatasetElement;
             NavManager.NavigateTo($"artistwork/{element.DataId}");
+        }
+        private void UpdateChartDataTimeRange(MostPlayedTimeRange mostPlayedTimeRange)
+        {
+            ChartDataTimeRange = mostPlayedTimeRange;
+            Chart.RefreshChartData();
         }
     }
 }

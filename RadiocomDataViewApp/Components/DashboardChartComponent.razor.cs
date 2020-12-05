@@ -25,12 +25,12 @@ namespace RadiocomDataViewApp.Components
             BeginAtZero = true
         };
 
-        
 
-        [Inject]
-        public IJSRuntime JSRuntime { get; set; }
-        [Inject]
-        public NavigationManager NavManager { get; set; }
+
+        //[Inject]
+        //public IJSRuntime JSRuntime { get; set; }
+        //[Inject]
+        //public NavigationManager NavManager { get; set; }
 
         public readonly Object ChartOptionsObj;
         public readonly ChartOptions chartOptions;
@@ -53,6 +53,7 @@ namespace RadiocomDataViewApp.Components
         public Dictionary<string, EventCallback<MouseEventArgs>> ChartTimeFrames { get; set; }
         [Parameter]
         public EventCallback<DashboardChartMouseEventArgs> OnDashboardChartElementClick { get; set; }
+        //public EventCallback<DashboardChartMouseEventArgs> OnDashboardChartElementHover { get; set; }
 
         private EventCallback<ChartMouseEventArgs> OnBarElementClick { get; set;}
         private async Task OnBarElementClickedHandler(ChartMouseEventArgs args)
@@ -61,9 +62,16 @@ namespace RadiocomDataViewApp.Components
             DashboardChartMouseEventArgs chartMouseEventArgs = new DashboardChartMouseEventArgs(args.DatasetIndex, args.Index, args.Model);
             chartMouseEventArgs.DatasetElement = CurrentDataset.Data[args.Index]; 
             await OnDashboardChartElementClick.InvokeAsync(chartMouseEventArgs);
-            Console.WriteLine("here");
-            
         }
+
+        //private async Task OnBarElementHoveredHandler(ChartMouseEventArgs args)
+        //{
+        //    DashboardChartMouseEventArgs chartMouseEventArgs = new DashboardChartMouseEventArgs(args.DatasetIndex, args.Index, args.Model);
+        //    chartMouseEventArgs.DatasetElement = CurrentDataset.Data[args.Index];
+        //    await OnDashboardChartElementHover.InvokeAsync(chartMouseEventArgs);           
+        //}
+
+        
 
         public void RefreshChartData()
         {
@@ -134,7 +142,9 @@ namespace RadiocomDataViewApp.Components
                             Ticks = StandardTicks
                         }
                     }
-                }
+                },
+                AspectRatio = 1.5
+                
             };
 
 
@@ -152,7 +162,7 @@ namespace RadiocomDataViewApp.Components
 
         protected override bool ShouldRender()
         {
-            Console.WriteLine(Chart.Data != null && (Chart.Data.Datasets?.Any(x => x.Data?.Any() ?? false) ?? false) && base.ShouldRender());
+            Console.WriteLine("should render:" + Chart.Data != null && (Chart.Data.Datasets?.Any(x => x.Data?.Any() ?? false) ?? false) && base.ShouldRender());
             return Chart.Data != null && (Chart.Data.Datasets?.Any(x => x.Data?.Any() ?? false) ?? false) && base.ShouldRender();
         }
         private string GetScaleFontColor()
@@ -168,10 +178,5 @@ namespace RadiocomDataViewApp.Components
             }
         }
     }
-    public class DashboardChartData
-    {
-        public string Label { get; set; }
-        public int Value { get; set; }
-        public int DataId { get; set; }
-    }
+    
 }

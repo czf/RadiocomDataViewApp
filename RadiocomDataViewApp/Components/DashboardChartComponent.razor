@@ -1,18 +1,19 @@
-﻿
-<ChartComponentHeaderButtons />
+﻿<Card>
+	<CardHeader>
+		@if (!String.IsNullOrEmpty(ChartTitle))
+		{
+			<Container Fluid="true" Style="text-align:center">
+				<Heading Size="HeadingSize.Is5" Alignment="TextAlignment.None">@ChartTitle</Heading>
+			</Container>
+		}
+	</CardHeader>
+	<CardBody>
 
-<br />
-@if (!String.IsNullOrEmpty(ChartTitle))
-{
-	<Container Fluid="true" Style="text-align:center">
-		<Heading Size="HeadingSize.Is6" Alignment="TextAlignment.None" >@ChartTitle</Heading>
-	</Container>
-}
-<HorizontalBarChart @ref="Chart" TItem="BarChartDatasetXValue" OptionsObject="@ChartOptionsObj" Clicked="@OnBarElementClickedHandler" />
+		<ChartComponentHeaderButtons />
 
+		
 
-@code{
-	
+		<HorizontalBarChart @ref="Chart" TItem="BarChartDatasetXValue" OptionsObject="@ChartOptionsObj" Clicked="@OnBarElementClickedHandler" />
+	</CardBody>
 
-
-}
+</Card>

@@ -31,27 +31,12 @@ namespace RadiocomDataViewApp.Pages
         public Action ClickMenu { get; set; }
 
         
-        public Index()
+        public Index():base()
         {
            
 
          
         }
-
-        
-
-        //private void BarClick(ChartMouseEventArgs args)
-        //private void BarClick(MouseEventArgs args)
-        //{
-
-        //    ClickMenu();
-        //}
-        //private void BarClick2()
-        //{
-
-        //    ClickMenu();
-        //}
-
 
         protected override Task OnParametersSetAsync()
         {
@@ -68,13 +53,6 @@ namespace RadiocomDataViewApp.Pages
 
         }
 
-        
-
-        private void ClickBar(DashboardChartMouseEventArgs args)
-        {
-            BarChartDatasetXValue element = (BarChartDatasetXValue)args.DatasetElement;
-            NavManager.NavigateTo($"artistwork/{element.DataId}");
-        }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -123,11 +101,6 @@ namespace RadiocomDataViewApp.Pages
         }
 
 
-        private MostPlayedTimeRange GetMostPlayedSongsTimeRange()
-        {
-            Console.WriteLine("");
-            return MostPlayedSongsTimeRangeValue;
-        }
 
         private RenderFragment GenerateButton()
         {
@@ -152,23 +125,17 @@ namespace RadiocomDataViewApp.Pages
         }
         
 
-        private MostPlayedTimeRange MostPlayedSongsTimeRangeValue = MostPlayedTimeRange.SevenDays;
-        private void ChangeChartTimeRange(MostPlayedTimeRange mostPlayedSongsTimeRange)
-        {
-            Console.WriteLine("change range:" + mostPlayedSongsTimeRange);
-            MostPlayedSongsTimeRangeValue = mostPlayedSongsTimeRange;
-            TopPlayedSongsChart.RefreshChartData();
-        }
-        DashboardChartComponent TopPlayedSongsChart;
-
-    }
-
-    public static class ChartColorExtensions
-    {
-        public static ChartColor ShallowClone(this ChartColor chartColor)
-            => ChartColor.FromRgba(chartColor.R, chartColor.B, chartColor.G, chartColor.A);
+ 
         
+
     }
+
+    //public static class ChartColorExtensions
+    //{
+    //    public static ChartColor ShallowClone(this ChartColor chartColor)
+    //        => ChartColor.FromRgba(chartColor.R, chartColor.B, chartColor.G, chartColor.A);
+        
+    //}
 
 }
 
