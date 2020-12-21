@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RadiocomDataViewApp.Clients
 {
-    public enum MostPlayedTimeRange
+    public enum AggregateTimeRange
     {
         None,
         SevenDays, 

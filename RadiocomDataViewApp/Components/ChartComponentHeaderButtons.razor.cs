@@ -15,20 +15,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Collections;
 using RadiocomDataViewApp.Pages;
 using RadiocomDataViewApp.Objects;
-using System.Threading;
 
 namespace RadiocomDataViewApp.Components
 {
 
     public partial class ChartComponentHeaderButtons : ComponentBase
-    {
-        //private Dictionary<int, Button> ButtonsList { get; set; } = new Dictionary<int, Button>();
-        //private Dictionary<int, Tab> TabsList { get; set; } = new Dictionary<int, Tab>();
-
-        
-        //[CascadingParameter(Name = nameof(ChartComponentHeaderButtons.Buttons))]
-        //public Dictionary<string, EventCallback> Buttons { get; set; }
-
+    {        
+        [Parameter]
         [CascadingParameter(Name = nameof(ChartComponentHeaderButtons.HeaderButtonConfigs))]
         public List<HeaderButtonState> HeaderButtonConfigs { get; set; }
 
@@ -45,20 +38,12 @@ namespace RadiocomDataViewApp.Components
                 {
                     selected = state;
                     state.Loading = true;
-                    Thread.Yield();
                 }
             }
             selected.Loading = true;
             await callback.InvokeAsync(mouseEventArgs);
             selected.Loading = false;
         }
-
-        
-        
-
-
-
-
     }
 
 }

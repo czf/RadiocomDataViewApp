@@ -194,5 +194,8 @@ app {
     }
 }
 .b-layout-header-fixed{
-    z-index:2;
+    z-index: 2;
+}
+.d-grid{
+    display: grid !important;
 }

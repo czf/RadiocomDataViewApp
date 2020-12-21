@@ -10,26 +10,11 @@ namespace RadiocomDataViewApp.Clients
 {
     public class MockRadiocomDataAggregateDataClient : IRadiocomDataAggregateDataClient
     {
-        public List<ItemCount> GetMostPlayedSongs(MostPlayedTimeRange timeRange)
+        private static Random _random = new Random();
+
+        public List<ItemCount> GetMostPlayedSongs(AggregateTimeRange timeRange)
         {
-            int multiplier = 0;
-            switch (timeRange)
-            {
-                case MostPlayedTimeRange.None:
-                    throw new InvalidEnumArgumentException("Must specify time range value other than None");
-                case MostPlayedTimeRange.SevenDays:
-                    multiplier = 1;
-                    break;
-                case MostPlayedTimeRange.ThreeMonths:
-                    multiplier = 20;
-                    break;
-                case MostPlayedTimeRange.AllTime:
-                    multiplier = 50;
-                    break;
-                default:
-                    throw new NotSupportedException("Value: " + timeRange.ToString());
-                    break;
-            }
+            int multiplier = GetTimeRangeMultipler(timeRange);
             return new List<ItemCount>()
             {
                 new ItemCount(){Count=100*multiplier,Name="song name", ItemId = 77},
@@ -40,27 +25,34 @@ namespace RadiocomDataViewApp.Clients
                 new ItemCount(){Count=51*multiplier, Name="something song", ItemId = 513}
             };
         }
-        
-        public List<ItemCount> GetMostPlayedArtists(MostPlayedTimeRange timeRange)
+
+        private static int GetTimeRangeMultipler(AggregateTimeRange timeRange)
         {
-            int multiplier = 0;
+            int multiplier;
             switch (timeRange)
             {
-                case MostPlayedTimeRange.None:
+                case AggregateTimeRange.None:
                     throw new InvalidEnumArgumentException("Must specify time range value other than None");
-                case MostPlayedTimeRange.SevenDays:
+                case AggregateTimeRange.SevenDays:
                     multiplier = 1;
                     break;
-                case MostPlayedTimeRange.ThreeMonths:
+                case AggregateTimeRange.ThreeMonths:
                     multiplier = 20;
                     break;
-                case MostPlayedTimeRange.AllTime:
+                case AggregateTimeRange.AllTime:
                     multiplier = 50;
                     break;
                 default:
                     throw new NotSupportedException("Value: " + timeRange.ToString());
                     break;
             }
+
+            return multiplier;
+        }
+
+        public List<ItemCount> GetMostPlayedArtists(AggregateTimeRange timeRange)
+        {   
+            int multiplier = GetTimeRangeMultipler(timeRange);
             return new List<ItemCount>()
             {
                 new ItemCount(){Count=100*multiplier,Name="artist name", ItemId = 77},
@@ -70,6 +62,20 @@ namespace RadiocomDataViewApp.Clients
                 new ItemCount(){Count=51*multiplier, Name="artist something", ItemId = 204},
                 new ItemCount(){Count=51*multiplier, Name="something artist", ItemId = 513}
             };
+        }
+
+        public int GetTotalUniqueSongs(AggregateTimeRange timeRange)
+        {
+            int multiplier = GetTimeRangeMultipler(timeRange);
+
+            return multiplier * _random.Next(300, 350);
+        }
+
+        public int GetTotalUniqueArtists(AggregateTimeRange timeRange)
+        {
+            int multiplier = GetTimeRangeMultipler(timeRange);
+
+            return multiplier * _random.Next(300, 350);
         }
     }
 }

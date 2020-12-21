@@ -13,6 +13,7 @@ using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using RadiocomDataViewApp.Interfaces;
 using RadiocomDataViewApp.Clients;
+using RadiocomDataViewApp.Components.IndexCharts;
 
 namespace RadiocomDataViewApp
 {
@@ -30,16 +31,17 @@ namespace RadiocomDataViewApp
                 .AddFontAwesomeIcons();
 
             builder.RootComponents.Add<App>("app");
-
+            
             builder.Services.AddSingleton(sp => new EnvironmentService { IsDevelopment = builder.HostEnvironment.IsDevelopment() });
             builder.Services.AddSingleton<IRadiocomDataAggregateDataClient, MockRadiocomDataAggregateDataClient>();
+            builder.Services.AddSingleton<IRadiocomArtistRepository, MockRadiocomArtistRepository>();
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 
             var host = builder.Build();
-            host.Services
-                .UseBootstrapProviders()
-                .UseFontAwesomeIcons();
+            //host.Services
+            //    .UseBootstrapProviders()
+            //    .UseFontAwesomeIcons();
                 
             await host.RunAsync();
         }

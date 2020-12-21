@@ -29,13 +29,18 @@ namespace RadiocomDataViewApp.Pages
         public EventCallback OnMenuHamburgerClick { get; set; }
         [CascadingParameter]
         public Action ClickMenu { get; set; }
+        private List<HeaderButtonState> HeaderButtonConfigs { get; }
 
-        
         public Index():base()
         {
-           
 
-         
+            HeaderButtonConfigs = new List<HeaderButtonState>()
+            {
+                new HeaderButtonState(){Text = "7 Days",ButtonColor=Color.Secondary,Active=true, ButtonClickCallback = EventCallback.Factory.Create(this, () => { }) } ,
+                new HeaderButtonState(){Text = "3 Months", ButtonClickCallback = EventCallback.Factory.Create(this, () => { }) } ,
+                new HeaderButtonState(){Text = "All Time", ButtonClickCallback = EventCallback.Factory.Create(this, () => { }) }
+            };
+
         }
 
         protected override Task OnParametersSetAsync()

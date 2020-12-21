@@ -13,7 +13,7 @@ namespace RadiocomDataViewApp.Components.IndexCharts
     public partial class TopPlayedSongsChart : ComponentBase
     {
         private DashboardChartComponent Chart;
-        private MostPlayedTimeRange ChartDataTimeRange;
+        private AggregateTimeRange ChartDataTimeRange;
 
         private List<HeaderButtonState> HeaderButtonConfigs { get; set; }
 
@@ -29,12 +29,12 @@ namespace RadiocomDataViewApp.Components.IndexCharts
         {
             HeaderButtonConfigs = new List<HeaderButtonState>()
             {
-                new HeaderButtonState(){Text = "7 Days",ButtonColor=Color.Secondary,Active=true, ButtonClickCallback = EventCallback.Factory.Create(this, () => UpdateChartDataTimeRange(MostPlayedTimeRange.SevenDays)) } ,
-                new HeaderButtonState(){Text = "3 Months", ButtonClickCallback = EventCallback.Factory.Create(this, () => UpdateChartDataTimeRange(MostPlayedTimeRange.ThreeMonths)) } ,
-                new HeaderButtonState(){Text = "All Time", ButtonClickCallback = EventCallback.Factory.Create(this, () => UpdateChartDataTimeRange(MostPlayedTimeRange.AllTime)) } 
+                new HeaderButtonState(){Text = "7 Days",ButtonColor=Color.Secondary,Active=true, ButtonClickCallback = EventCallback.Factory.Create(this, () => UpdateChartDataTimeRange(AggregateTimeRange.SevenDays)) } ,
+                new HeaderButtonState(){Text = "3 Months", ButtonClickCallback = EventCallback.Factory.Create(this, () => UpdateChartDataTimeRange(AggregateTimeRange.ThreeMonths)) } ,
+                new HeaderButtonState(){Text = "All Time", ButtonClickCallback = EventCallback.Factory.Create(this, () => UpdateChartDataTimeRange(AggregateTimeRange.AllTime)) } 
             };
 
-            ChartDataTimeRange = MostPlayedTimeRange.SevenDays;
+            ChartDataTimeRange = AggregateTimeRange.SevenDays;
         }
 
 
@@ -53,7 +53,7 @@ namespace RadiocomDataViewApp.Components.IndexCharts
             NavManager.NavigateTo($"artistwork/{element.DataId}");
         }
 
-        private void UpdateChartDataTimeRange(MostPlayedTimeRange mostPlayedTimeRange)
+        private void UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
         {
             ChartDataTimeRange = mostPlayedTimeRange;
             Chart.RefreshChartData();

@@ -17,48 +17,10 @@
 				<Column Class="col-lg-4 col-md-6 col-sm-12 pb-1 pb-sm-0">
 					<TopPlayedArtistsChart />
 				</Column>
-				<Column Class="col-lg-4 col-md-6 col-sm-12 pb-1 pb-sm-0" Style="display:flex;flex-direction:column;">
-					<Card Style="flex:1;">
-						<CardHeader Class="text-center">
-							Total Unique Songs
-						</CardHeader>
-						<CardBody Style="display:grid;">
-							<ChartComponentHeaderButtons />
-
-							<Text Alignment="TextAlignment.Center" Class="display-4" Style="align-self:center;">
-								300
-							</Text>
-
-						</CardBody>
-
-					</Card>
-					<Card Style="flex:1;">
-						<CardHeader Class="text-center">
-							Total Unique Songs
-						</CardHeader>
-						<CardBody Style="display:grid">
-							<ChartComponentHeaderButtons />
-
-							<Text Alignment="TextAlignment.Center" Class="display-4" Style="align-self:center;">
-								300
-							</Text>
-
-						</CardBody>
-
-					</Card>
-					@*<Card>
-			<CardHeader Class="text-center">
-				Total Unique Artists
-			</CardHeader>
-			<CardBody>
-				<ChartComponentHeaderButtons />
-				<Jumbotron>
-					<JumbotronTitle Class="text-center">
-						300
-					</JumbotronTitle>
-				</Jumbotron>
-			</CardBody>
-		</Card>*@
+				<Column Class="col-lg-4 col-md-6 col-sm-12 pb-1 pb-sm-0 flex-column d-flex">					@*Style="display:flex;flex-direction:column;"*@
+					<TotalUniqueSongsMetric/>
+					<TotalUniqueArtistsMetric/>
+					
 				</Column>
 			</Row>
 

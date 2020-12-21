@@ -53,7 +53,6 @@ namespace RadiocomDataViewApp.Components
         public Dictionary<string, EventCallback<MouseEventArgs>> ChartTimeFrames { get; set; }
         [Parameter]
         public EventCallback<DashboardChartMouseEventArgs> OnDashboardChartElementClick { get; set; }
-        //public EventCallback<DashboardChartMouseEventArgs> OnDashboardChartElementHover { get; set; }
 
         private EventCallback<ChartMouseEventArgs> OnBarElementClick { get; set;}
         private async Task OnBarElementClickedHandler(ChartMouseEventArgs args)
@@ -63,13 +62,6 @@ namespace RadiocomDataViewApp.Components
             chartMouseEventArgs.DatasetElement = CurrentDataset.Data[args.Index]; 
             await OnDashboardChartElementClick.InvokeAsync(chartMouseEventArgs);
         }
-
-        //private async Task OnBarElementHoveredHandler(ChartMouseEventArgs args)
-        //{
-        //    DashboardChartMouseEventArgs chartMouseEventArgs = new DashboardChartMouseEventArgs(args.DatasetIndex, args.Index, args.Model);
-        //    chartMouseEventArgs.DatasetElement = CurrentDataset.Data[args.Index];
-        //    await OnDashboardChartElementHover.InvokeAsync(chartMouseEventArgs);           
-        //}
 
         
 
