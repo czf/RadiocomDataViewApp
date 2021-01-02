@@ -12,6 +12,8 @@ namespace RadiocomDataViewApp.Components.IndexCharts
     public partial class TopPlayedArtistsChart : ComponentBase
     {
         [Inject]
+        public NavigationManager NavManager { get; set; }
+        [Inject]
         public IRadiocomDataAggregateDataClient RadiocomDataAggregateDataClient { get; set; }
 
         public TopPlayedArtistsChart()

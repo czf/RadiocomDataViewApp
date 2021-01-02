@@ -29,17 +29,17 @@ namespace RadiocomDataViewApp.Pages
         public EventCallback OnMenuHamburgerClick { get; set; }
         [CascadingParameter]
         public Action ClickMenu { get; set; }
-        private List<HeaderButtonState> HeaderButtonConfigs { get; }
+        //private List<HeaderButtonState> HeaderButtonConfigs { get; }
 
         public Index():base()
         {
 
-            HeaderButtonConfigs = new List<HeaderButtonState>()
-            {
-                new HeaderButtonState(){Text = "7 Days",ButtonColor=Color.Secondary,Active=true, ButtonClickCallback = EventCallback.Factory.Create(this, () => { }) } ,
-                new HeaderButtonState(){Text = "3 Months", ButtonClickCallback = EventCallback.Factory.Create(this, () => { }) } ,
-                new HeaderButtonState(){Text = "All Time", ButtonClickCallback = EventCallback.Factory.Create(this, () => { }) }
-            };
+            //HeaderButtonConfigs = new List<HeaderButtonState>()
+            //{
+            //    new HeaderButtonState(){Text = "7 Days",ButtonColor=Color.Secondary,Active=true, ButtonClickCallback = EventCallback.Factory.Create(this, () => { }) } ,
+            //    new HeaderButtonState(){Text = "3 Months", ButtonClickCallback = EventCallback.Factory.Create(this, () => { }) } ,
+            //    new HeaderButtonState(){Text = "All Time", ButtonClickCallback = EventCallback.Factory.Create(this, () => { }) }
+            //};
 
         }
 
@@ -55,7 +55,6 @@ namespace RadiocomDataViewApp.Pages
         protected override Task OnInitializedAsync()
         {
             return base.OnInitializedAsync();
-
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -68,66 +67,66 @@ namespace RadiocomDataViewApp.Pages
 
 
 
-        BarChartDataset<double> GetChartDataset()
-        {
-            List<string> f2 = new List<string>() { initialChartColor, alternateChartColor, initialChartColor, alternateChartColor, initialChartColor, alternateChartColor };//{ ChartColor.FromRgba(52, 53,52, 1f), ChartColor.FromRgba(67, 65, 65, 1f), ChartColor.FromRgba(52, 53, 52, 0.2f), ChartColor.FromRgba(52, 53, 52, 0.2f), ChartColor.FromRgba(52, 53, 52, 0.2f), ChartColor.FromRgba(52, 53, 52, 0.2f) };
+        //BarChartDataset<double> GetChartDataset()
+        //{
+        //    List<string> f2 = new List<string>() { initialChartColor, alternateChartColor, initialChartColor, alternateChartColor, initialChartColor, alternateChartColor };//{ ChartColor.FromRgba(52, 53,52, 1f), ChartColor.FromRgba(67, 65, 65, 1f), ChartColor.FromRgba(52, 53, 52, 0.2f), ChartColor.FromRgba(52, 53, 52, 0.2f), ChartColor.FromRgba(52, 53, 52, 0.2f), ChartColor.FromRgba(52, 53, 52, 0.2f) };
 
-            List<string> f = new List<string>() { alternateChartColor, initialChartColor, alternateChartColor, initialChartColor, alternateChartColor, initialChartColor };//{ ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(255, 99, 132, 0.2f) };
+        //    List<string> f = new List<string>() { alternateChartColor, initialChartColor, alternateChartColor, initialChartColor, alternateChartColor, initialChartColor };//{ ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(255, 99, 132, 0.2f) };
 
 
-            var set = new BarChartDataset<double>
-            {
-                //Label = "# of randoms",
-                Data = RandomizeData().OrderByDescending(x => x).ToList(),
-                BackgroundColor = f2,
-                BorderColor = f2
-                //Fill = true,
-                //PointRadius = 2,
-                //BorderDash = new List<int> { }
-            };
+        //    var set = new BarChartDataset<double>
+        //    {
+        //        //Label = "# of randoms",
+        //        Data = RandomizeData().OrderByDescending(x => x).ToList(),
+        //        BackgroundColor = f2,
+        //        BorderColor = f2
+        //        //Fill = true,
+        //        //PointRadius = 2,
+        //        //BorderDash = new List<int> { }
+        //    };
 
-            set.HoverBackgroundColor.Clear();
-            set.HoverBorderColor.Clear();
-            return set;
-        }
+        //    set.HoverBackgroundColor.Clear();
+        //    set.HoverBorderColor.Clear();
+        //    return set;
+        //}
 
-        ChartColor initialChartColor = ChartColor.FromRgba(104, 103, 103, 1f);
-        ChartColor alternateChartColor = ChartColor.FromRgba(170, 165, 165, 1f);
+        //ChartColor initialChartColor = ChartColor.FromRgba(104, 103, 103, 1f);
+        //ChartColor alternateChartColor = ChartColor.FromRgba(170, 165, 165, 1f);
 
-        string[] Labels = { "Red", "Blue", "Yellow", "Green", "Purple", "Orange" };
+        //string[] Labels = { "Red", "Blue", "Yellow", "Green", "Purple", "Orange" };
         //List<string> backgroundColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(54, 162, 235, 0.2f),  ChartColor.FromRgba(255, 206, 86, 0.2f), ChartColor.FromRgba(75, 192, 192, 0.2f), ChartColor.FromRgba(153, 102, 255, 0.2f), ChartColor.FromRgba(255, 159, 64, 0.2f) };
         //List<string> borderColors = new List<string> {  ChartColor.FromRgba(255, 99, 132, 1f), ChartColor.FromRgba(54, 162, 235, 1f), ChartColor.FromRgba(255, 206, 86, 1f), ChartColor.FromRgba(75, 192, 192, 1f), ChartColor.FromRgba(153, 102, 255, 1f), ChartColor.FromRgba(255, 159, 64, 1f) };
 
-        List<double> RandomizeData()
-        {
-            var r = new Random(DateTime.Now.Millisecond);
+        //List<double> RandomizeData()
+        //{
+        //    var r = new Random(DateTime.Now.Millisecond);
 
-            return new List<double> { r.Next(3, 50) * r.NextDouble(), r.Next(3, 50) * r.NextDouble(), r.Next(3, 50) * r.NextDouble(), r.Next(3, 50) * r.NextDouble(), r.Next(3, 50) * r.NextDouble(), r.Next(3, 50) * r.NextDouble() };
-        }
+        //    return new List<double> { r.Next(3, 50) * r.NextDouble(), r.Next(3, 50) * r.NextDouble(), r.Next(3, 50) * r.NextDouble(), r.Next(3, 50) * r.NextDouble(), r.Next(3, 50) * r.NextDouble(), r.Next(3, 50) * r.NextDouble() };
+        //}
 
 
 
-        private RenderFragment GenerateButton()
-        {
-            RenderFragment renderFragmentResult = new RenderFragment(GenerateButtonDelegateFunction);
-            return renderFragmentResult; 
-        }
+        //private RenderFragment GenerateButton()
+        //{
+        //    RenderFragment renderFragmentResult = new RenderFragment(GenerateButtonDelegateFunction);
+        //    return renderFragmentResult; 
+        //}
         
-        private void GenerateButtonDelegateFunction(RenderTreeBuilder builder)
-        {
-            builder.OpenComponent<Button>(0);
-            builder.AddAttribute(1, "Active", true);
-            builder.AddAttribute(2, "Outline", true);
-            builder.AddAttribute(3, "Color", Color.Secondary);
-            builder.AddAttribute(7, "ChildContent", ChildContentTextBuilder(8, "7 Days"));
+        //private void GenerateButtonDelegateFunction(RenderTreeBuilder builder)
+        //{
+        //    builder.OpenComponent<Button>(0);
+        //    builder.AddAttribute(1, "Active", true);
+        //    builder.AddAttribute(2, "Outline", true);
+        //    builder.AddAttribute(3, "Color", Color.Secondary);
+        //    builder.AddAttribute(7, "ChildContent", ChildContentTextBuilder(8, "7 Days"));
             
-            builder.CloseComponent();
-        }
+        //    builder.CloseComponent();
+        //}
 
-        private RenderFragment ChildContentTextBuilder(int sequence, string text)
-        {
-            return (b) => b.AddContent(sequence, text);
-        }
+        //private RenderFragment ChildContentTextBuilder(int sequence, string text)
+        //{
+        //    return (b) => b.AddContent(sequence, text);
+        //}
         
 
  

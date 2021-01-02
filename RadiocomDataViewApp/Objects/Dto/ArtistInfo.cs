@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RadiocomDataViewApp.Interfaces;
 
 namespace RadiocomDataViewApp.Objects.Dto
 {
-    public class ArtistInfo
+    public class ArtistInfo : IHasName
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
     }
 }

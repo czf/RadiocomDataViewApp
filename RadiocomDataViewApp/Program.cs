@@ -14,6 +14,7 @@ using Blazorise.Icons.FontAwesome;
 using RadiocomDataViewApp.Interfaces;
 using RadiocomDataViewApp.Clients;
 using RadiocomDataViewApp.Components.IndexCharts;
+using RadiocomDataViewApp.Clients.Mocks;
 
 namespace RadiocomDataViewApp
 {
@@ -35,6 +36,7 @@ namespace RadiocomDataViewApp
             builder.Services.AddSingleton(sp => new EnvironmentService { IsDevelopment = builder.HostEnvironment.IsDevelopment() });
             builder.Services.AddSingleton<IRadiocomDataAggregateDataClient, MockRadiocomDataAggregateDataClient>();
             builder.Services.AddSingleton<IRadiocomArtistRepository, MockRadiocomArtistRepository>();
+            builder.Services.AddSingleton<IRadiocomArtistWorkRepository, MockRadiocomArtistWorkRepository>();
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 
