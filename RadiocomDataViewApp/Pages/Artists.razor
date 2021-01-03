@@ -1,8 +1,0 @@
-﻿@using RadiocomDataViewApp.Objects.Dto
-
-@page "/artists/{AlphaChar?}"
-<h3>Artists</h3>
-
-
-<ListComponent TItem="ArtistInfo" Items="@RadiocomArtistRepository.GetArtists().OrderBy(x => x.Name)" ListItemHrefGenerator="HrefGenerator" />
-

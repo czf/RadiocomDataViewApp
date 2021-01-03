@@ -1,7 +1,25 @@
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
-* text=auto
+* binary
+#* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+#*.c text
+#*.h text
+#*.html text eol=crlf
+#*.js text eol=crlf
+#*.json text eol=crlf
+
+# Declare files that will always have CRLF line endings on checkout.
+#*.sln text eol=crlf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.eot binary
+*.ttf binary
 
 ###############################################################################
 # Set default behavior for command prompt diff.
