@@ -14,7 +14,7 @@ jobs:
     - uses: FranzDiebold/github-env-vars-action@v2.1.0
     - name: GitHub Environment Variables Action
       run: |
-          echo "CI_REPOSITORY_NAME=$CI_REPOSITORY_NAME"
+          export CI_REPOSITORY_NAME=$CI_REPOSITORY_NAME
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v1.7.2
