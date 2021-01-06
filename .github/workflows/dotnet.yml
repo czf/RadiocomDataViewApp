@@ -37,7 +37,7 @@ jobs:
     - name: Rewrite base href
       uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
       with:
-        html_path: ${{ env.PUBLISH_DIR }}/index.html
+        html_path: ./${{ env.PUBLISH_DIR }}/index.html
         base_href: /${{ env.CI_REPOSITORY_NAME }}/
     
     - name: Upload a Build Artifact
