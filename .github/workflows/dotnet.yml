@@ -16,7 +16,7 @@ jobs:
       run: |
           echo "CI_REPOSITORY_NAME=${CI_REPOSITORY_NAME}" >> $GITHUB_ENV
           echo "${{github.workspace}}"
-          echo "ls"
+          cd RadiocomDataViewApp
           ls
           
     - name: Setup .NET
