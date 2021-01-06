@@ -16,6 +16,8 @@ jobs:
       run: |
           echo "CI_REPOSITORY_NAME=${CI_REPOSITORY_NAME}" >> $GITHUB_ENV
           echo "${{github.workspace}}"
+          echo "ls"
+          ls
           
     - name: Setup .NET
       uses: actions/setup-dotnet@v1.7.2
