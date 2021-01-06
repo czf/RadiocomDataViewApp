@@ -15,7 +15,8 @@ jobs:
     - name: GitHub Environment Variables Action
       run: |
           echo "CI_REPOSITORY_NAME=${CI_REPOSITORY_NAME}" >> $GITHUB_ENV
-
+          echo "${{github.workspace}}"
+          
     - name: Setup .NET
       uses: actions/setup-dotnet@v1.7.2
       with:
