@@ -14,7 +14,7 @@ jobs:
     - uses: FranzDiebold/github-env-vars-action@v2.1.0
     - name: GitHub Environment Variables Action
       run: |
-          export CI_REPOSITORY_NAME=$CI_REPOSITORY_NAME
+          echo "CI_REPOSITORY_NAME=${CI_REPOSITORY_NAME}" >> $GITHUB_ENV
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v1.7.2
@@ -37,7 +37,7 @@ jobs:
       uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
       with:
         html_path: ${{ env.PUBLISH_DIR }}/index.html
-        base_href: /$CI_REPOSITORY_NAME /
+        base_href: /${{ format(CI_REPOSITORY_NAME, )  }} /
     
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
