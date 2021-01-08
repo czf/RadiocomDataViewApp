@@ -7,12 +7,17 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+  
 
     steps:
+    - name: Path
+      run: |
+        ls
+        pwd
+        
     - uses: actions/checkout@v2
       with:
-        ref: master
-        path:: master
+        path:: m
   
     - name: Path
       run: |
