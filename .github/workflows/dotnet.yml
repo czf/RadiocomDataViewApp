@@ -15,7 +15,9 @@ jobs:
         path:: master
   
     - name: Path
-      run: ls
+      run: |
+        ls
+        cwd
     
     - name: Checkout gh-pages branch
       uses: actions/checkout@v2
