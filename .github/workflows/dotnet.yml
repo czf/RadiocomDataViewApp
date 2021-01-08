@@ -28,7 +28,6 @@ jobs:
     - name: Build
       run: |
         dotnet build --no-restore 
-        ls
     
     - name: Test
       run: dotnet test --no-build --verbosity normal
@@ -42,10 +41,16 @@ jobs:
 #cd bin/release/net5.0/publish/wwwroot
         
     
-    - name: Rewrite base href
+    - name: Rewrite base href index.html
       uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
       with:
         html_path: ${{ env.PUBLISH_DIR }}/index.html
+        base_href: /${{ env.CI_REPOSITORY_NAME }}/
+        
+    - name: Rewrite base href 404.html
+      uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
+      with:
+        html_path: ${{ env.PUBLISH_DIR }}/404.html
         base_href: /${{ env.CI_REPOSITORY_NAME }}/
     
     - name: Upload a Build Artifact
