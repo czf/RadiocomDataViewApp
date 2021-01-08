@@ -68,7 +68,7 @@ jobs:
     
     - name: Copy publish to gh-pages
       run: |
-        cp -a ${{env.PUBLISH_DIR}}/. /gh-pages/
+        cp -a ${{env.PUBLISH_DIR}}/. ./gh-pages/RadiocomDataViewApp
     
     
    
