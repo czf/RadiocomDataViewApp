@@ -42,17 +42,17 @@ jobs:
         dotnet-version: '5.0.x'
         
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./master
     
     - name: Build
       run: |
-        dotnet build --no-restore 
+        dotnet build ./master --no-restore 
     
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ./master --no-build --verbosity normal
     
     - name: publish
-      run: dotnet publish -c release
+      run: dotnet publish ./master -c release
     
     - name: Nav
       run: |
