@@ -68,7 +68,11 @@ jobs:
     
     - name: Copy publish to gh-pages
       run: |
-        cp -a ${{env.PUBLISH_DIR}}/. ./gh-pages/RadiocomDataViewApp
-    
+        ls ./gh-pages
+        cp -a ${{env.PUBLISH_DIR}}/. ./gh-pages/
+        git add .
+        git commit -m "Updating with latest"
+        git push origin gh-pages
+        
     
    
