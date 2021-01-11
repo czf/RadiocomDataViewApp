@@ -18,6 +18,6 @@ namespace RadiocomDataViewApp.Pages
        [Parameter]
         public string AlphaChar { get; set; }
 
-        Func<ArtistInfo, string> HrefGenerator = item => $"/artist/{item.Id}";
+        Func<ArtistInfo, string> HrefGenerator = item => $"artist/{item.Id}";
     }
 }

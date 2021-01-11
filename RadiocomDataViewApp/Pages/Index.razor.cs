@@ -18,7 +18,7 @@ using RadiocomDataViewApp.Interfaces;
 using RadiocomDataViewApp.Objects;
 
 using static RadiocomDataViewApp.Components.ChartComponentHeaderButtons;
-using static RadiocomDataViewApp.Components.DashboardChartComponent;
+using static RadiocomDataViewApp.Components.DashboardHorizontalBarChartComponent;
 
 namespace RadiocomDataViewApp.Pages
 {
@@ -57,13 +57,13 @@ namespace RadiocomDataViewApp.Pages
             return base.OnInitializedAsync();
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
-            {
-                //await HandleRedraw();
-            }
-        }
+        //protected override async Task OnAfterRenderAsync(bool firstRender)
+        //{
+        //    if (firstRender)
+        //    {
+        //        //await HandleRedraw();
+        //    }
+        //}
 
 
 

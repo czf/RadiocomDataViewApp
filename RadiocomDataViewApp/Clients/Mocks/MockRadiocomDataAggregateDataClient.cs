@@ -44,7 +44,6 @@ namespace RadiocomDataViewApp.Clients
                     break;
                 default:
                     throw new NotSupportedException("Value: " + timeRange.ToString());
-                    break;
             }
 
             return multiplier;
@@ -76,6 +75,62 @@ namespace RadiocomDataViewApp.Clients
             int multiplier = GetTimeRangeMultipler(timeRange);
 
             return multiplier * _random.Next(300, 350);
+        }
+
+        public List<ItemCount> GetMostPlayedSongs(AggregateTimeRange timeRange, int artistId)
+        {
+            return GetMostPlayedSongs(timeRange);
+            
+        }
+
+        public List<ItemCount> GetSongPlayedOverTime(AggregateTimeRange timeRange, int artistWorkId)
+        {
+            int multiplier = GetTimeRangeMultipler(timeRange);
+
+            List<ItemCount> result = new List<ItemCount>()
+            {
+                new ItemCount(){Count = 10 * multiplier, Name= GetOverTimeName(0, timeRange), ItemId = artistWorkId},
+                new ItemCount(){Count = 2 * multiplier, Name= GetOverTimeName(1, timeRange), ItemId = artistWorkId},
+                new ItemCount(){Count = 7 * multiplier, Name= GetOverTimeName(2, timeRange), ItemId = artistWorkId},
+                new ItemCount(){Count = 2 * multiplier, Name= GetOverTimeName(3, timeRange), ItemId = artistWorkId},
+                new ItemCount(){Count = 2 * multiplier, Name= GetOverTimeName(4, timeRange), ItemId = artistWorkId},
+                new ItemCount(){Count = 1 * multiplier, Name= GetOverTimeName(5, timeRange), ItemId = artistWorkId},
+                new ItemCount(){Count = 0 * multiplier, Name= GetOverTimeName(6, timeRange), ItemId = artistWorkId},
+            };
+            if(timeRange == AggregateTimeRange.ThreeMonths || timeRange == AggregateTimeRange.AllTime)
+            {
+                result.Add(new ItemCount() { Count = 10 * multiplier, Name = GetOverTimeName(7, timeRange), ItemId = artistWorkId });
+                result.Add(new ItemCount() { Count = 2 * multiplier, Name = GetOverTimeName(8, timeRange), ItemId = artistWorkId } );
+                result.Add(new ItemCount() { Count = 7 * multiplier, Name = GetOverTimeName(9, timeRange), ItemId = artistWorkId } );
+                result.Add(new ItemCount() { Count = 2 * multiplier, Name = GetOverTimeName(10, timeRange), ItemId = artistWorkId });
+                result.Add(new ItemCount() { Count = 2 * multiplier, Name = GetOverTimeName(11, timeRange), ItemId = artistWorkId });
+            }
+            result.Reverse();
+            return result;
+            
+        }
+
+        private string GetOverTimeName(int index, AggregateTimeRange aggregateTimeRange)
+        {
+            string result = string.Empty;
+            switch (aggregateTimeRange)
+            {
+                case AggregateTimeRange.None:
+                    throw new InvalidEnumArgumentException("Must specify time range value other than None");
+                case AggregateTimeRange.SevenDays:
+                    result = DateTime.Now.AddDays(index * -1).DayOfWeek.ToString();
+                    break;
+                case AggregateTimeRange.ThreeMonths:
+                    result = DateTime.Now.AddDays(index * -7).ToShortDateString();
+                    break;
+                case AggregateTimeRange.AllTime:
+                    result = DateTime.Now.AddMonths(index * -1).ToShortDateString();
+                    break;
+                default:
+                    throw new NotSupportedException("Value: " + aggregateTimeRange.ToString());
+
+            }
+            return result;
         }
     }
 }

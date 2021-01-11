@@ -30,15 +30,14 @@
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}"
     },
     "IIS": {
-        "commandName": "IIS",
-        "launchBrowser": true,
-        "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-        "launchUrl": "http://dev.radiocomview.com/",
-        "environmentVariables": {
-            "ASPNETCORE_ENVIRONMENT": "Development",
-            "NO_PROXY": "dev.radiocomview.com"
-        }
-
+      "commandName": "IIS",
+      "launchBrowser": true,
+      "launchUrl": "http://dev.radiocomview.com/",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "NO_PROXY": "dev.radiocomview.com"
+      },
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}"
     }
   }
 }

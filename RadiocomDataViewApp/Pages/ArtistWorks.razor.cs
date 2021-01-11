@@ -18,7 +18,7 @@ namespace RadiocomDataViewApp.Pages
         [Parameter]
         public string AlphaChar { get; set; }
 
-        Func<ArtistWorkDisplay, string> HrefGenerator = item => $"/artistwork/{item.Id}";
+        Func<ArtistWorkDisplay, string> HrefGenerator = item => $"artistwork/{item.Id}";
 
 
         private class ArtistWorkDisplay : IHasName

@@ -199,3 +199,6 @@ app {
 .d-grid{
     display: grid !important;
 }
+.breadcrumb {
+    background-color:initial;
+}

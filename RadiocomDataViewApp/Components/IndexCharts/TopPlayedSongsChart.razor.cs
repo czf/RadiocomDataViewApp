@@ -12,7 +12,7 @@ namespace RadiocomDataViewApp.Components.IndexCharts
 {
     public partial class TopPlayedSongsChart : ComponentBase
     {
-        private DashboardChartComponent Chart;
+        private DashboardHorizontalBarChartComponent Chart;
         private AggregateTimeRange ChartDataTimeRange;
 
         private List<HeaderButtonState> HeaderButtonConfigs { get; set; }

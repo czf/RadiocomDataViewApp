@@ -10,4 +10,10 @@ namespace RadiocomDataViewApp.Objects
         public int DataId { get; set; }
         public int X { get; set; }
     }
+
+    public class DashboardChartDatasetYValue
+    {
+        public int DataId { get; set; }
+        public int Y { get; set; }
+    }
 }

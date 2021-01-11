@@ -1,0 +1,19 @@
+﻿<Card>
+	<CardHeader>
+		@if (!String.IsNullOrEmpty(ChartTitle))
+		{
+			<Container Fluid="true" Style="text-align:center">
+				<Heading Size="HeadingSize.Is5" Alignment="TextAlignment.None">@ChartTitle</Heading>
+			</Container>
+		}
+	</CardHeader>
+	<CardBody>
+
+		<ChartComponentHeaderButtons />
+
+
+
+		<LineChart @ref="Chart" TItem="DashboardChartDatasetYValue" OptionsObject="@ChartOptionsObj" />
+	</CardBody>
+
+</Card>
