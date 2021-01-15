@@ -38,8 +38,9 @@ namespace RadiocomDataViewApp
             builder.Services.AddSingleton<IRadiocomArtistRepository, MockRadiocomArtistRepository>();
             builder.Services.AddSingleton<IRadiocomArtistWorkRepository, MockRadiocomArtistWorkRepository>();
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
-
+            string value =string.Empty;
+            value = (string)builder.Configuration.GetValue(typeof(string), "version");
+            Console.WriteLine($"version: {value}");
             var host = builder.Build();
             //host.Services
             //    .UseBootstrapProviders()

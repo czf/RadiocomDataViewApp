@@ -110,6 +110,17 @@ namespace RadiocomDataViewApp.Clients
             
         }
 
+        public List<ItemCount> GetSongPlayedAndOtherPlayed(AggregateTimeRange timeRange, int artistWorkId)
+        {
+            int multiplier = GetTimeRangeMultipler(timeRange);
+            List<ItemCount> result = new List<ItemCount>()
+            {
+                new ItemCount(){Count = 98 * multiplier, Name= "Other", ItemId = 0},
+                new ItemCount(){Count = 2 * multiplier, Name= GetOverTimeName(1, timeRange), ItemId = artistWorkId},
+            };
+            return result;
+        }
+
         private string GetOverTimeName(int index, AggregateTimeRange aggregateTimeRange)
         {
             string result = string.Empty;

@@ -26,7 +26,7 @@ namespace RadiocomDataViewApp.Components
         };
 
         public readonly object ChartOptionsObj;
-        public readonly ChartOptions chartOptions;
+        //public readonly ChartOptions chartOptions;
 
         [Parameter]
         public string YAxisLabel { get; set; }
@@ -133,14 +133,14 @@ namespace RadiocomDataViewApp.Components
             };
 
 
-            chartOptions = new ChartOptions()
-            {
-                Scales = new Scales()
-                {
-                    YAxes = new List<Axis>() { new Axis() { Ticks = new AxisTicks() { FontColor = "#fff" }, ScaleLabel = new AxisScaleLabel() { FontColor = "#fff", Display = true, LabelString = "valueObj" } } },
-                    XAxes = new List<Axis>() { new Axis() { Ticks = new AxisTicks() { FontColor = "#fff" }, ScaleLabel = new AxisScaleLabel() { FontColor = "#fff", Display = true, LabelString = "dimension" } } },
-                }
-            };
+            //chartOptions = new ChartOptions()
+            //{
+            //    Scales = new Scales()
+            //    {
+            //        YAxes = new List<Axis>() { new Axis() { Ticks = new AxisTicks() { FontColor = "#fff" }, ScaleLabel = new AxisScaleLabel() { FontColor = "#fff", Display = true, LabelString = "valueObj" } } },
+            //        XAxes = new List<Axis>() { new Axis() { Ticks = new AxisTicks() { FontColor = "#fff" }, ScaleLabel = new AxisScaleLabel() { FontColor = "#fff", Display = true, LabelString = "dimension" } } },
+            //    }
+            //};
             #endregion
  
         }

@@ -37,7 +37,6 @@ namespace RadiocomDataViewApp.Components
         public void RefreshChartData()
         {
             _integerMetricValue = (GenerateSingleDataMetric).Invoke();
-            Console.WriteLine("singleInt: " + _integerMetricValue);
         }
 
         protected override void OnParametersSet()
