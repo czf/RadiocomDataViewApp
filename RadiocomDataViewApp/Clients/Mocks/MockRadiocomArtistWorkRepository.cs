@@ -74,5 +74,10 @@ namespace RadiocomDataViewApp.Clients.Mocks
         {
             return await Task.FromResult(GetArtistWorks().First(x => x.Id == id));
         }
+
+        public async Task<IEnumerable<ArtistWorkInfo>> GetArtist_ArtistWorks(int artistId)
+        {
+            return await Task.FromResult( GetArtistWorks().Where(x => x.ArtistInfo.Id == artistId));
+        }
     }
 }

@@ -1,3 +1,7 @@
 ﻿@page "/artist/{ArtistId:int}/artistworks"
 @{
 }
+<h3>All Songs by @_artistName</h3>
+
+
+<ListComponent TItem="ArtistWorkDisplay" Items="@_artistWorkInfos.Select(x=> new ArtistWorkDisplay(x)).OrderBy(x => x.Name)" ListItemHrefGenerator="HrefGenerator" />

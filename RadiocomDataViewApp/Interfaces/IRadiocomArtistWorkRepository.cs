@@ -10,6 +10,7 @@ namespace RadiocomDataViewApp.Interfaces
     {
         IEnumerable<ArtistWorkInfo> GetArtistWorks();
         IEnumerable<ArtistWorkInfo> GetArtistWorks(char alphaFilter);
+        Task<IEnumerable<ArtistWorkInfo>> GetArtist_ArtistWorks(int artistId);
         Task<ArtistWorkInfo> GetArtistWork(int id);
 
     }

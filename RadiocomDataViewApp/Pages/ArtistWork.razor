@@ -14,34 +14,3 @@
 		<SongPercentageOfArtistPieChart ArtistWorkId="@ArtistWorkId" ArtistName="@ArtistName" ArtistId="@ArtistId" />
 	</Column>
 </Row>
-
-@using RadiocomDataViewApp.Clients;
-@code{
-
-	//Clients.AggregateTimeRange ChartDataTimeRange = Clients.AggregateTimeRange.SevenDays;
-	//private IEnumerable<DashboardChartData> SongPlayedOverTime()
-	//{
-	//	List<ItemCount> radioComData = RadiocomDataAggregateDataClient.GetSongPlayedOverTime(ChartDataTimeRange,ArtistWorkId);
-	//	return radioComData.Select(x => new DashboardChartData() { Label = x.Name, Value = x.Count, DataId = x.ItemId });
-
-	//}
-	//private List<HeaderButtonState> HeaderButtonConfigs { get; set; }
-	//private void SetupHeaderButtons()
-	//{
-	//	HeaderButtonConfigs = new List<HeaderButtonState>()
-	//		{
-	//			new HeaderButtonState(){Text = "7 Days",ButtonColor=Color.Secondary,Active=true, ButtonClickCallback = EventCallback.Factory.Create(this, () => UpdateChartDataTimeRange(AggregateTimeRange.SevenDays)) } ,
-	//			new HeaderButtonState(){Text = "3 Months", ButtonClickCallback = EventCallback.Factory.Create(this, () => UpdateChartDataTimeRange(AggregateTimeRange.ThreeMonths)) } ,
-	//			new HeaderButtonState(){Text = "All Time", ButtonClickCallback = EventCallback.Factory.Create(this, () => UpdateChartDataTimeRange(AggregateTimeRange.AllTime)) }
-	//		};
-
-	//	ChartDataTimeRange = AggregateTimeRange.SevenDays;
-	//}
-	//private DashboardLineGraphChartComponent Chart;
-
-	//private void UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
-	//{
-	//	ChartDataTimeRange = mostPlayedTimeRange;
-	//	Chart.RefreshChartData();
-	//}
-}
