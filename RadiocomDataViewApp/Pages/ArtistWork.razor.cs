@@ -20,11 +20,6 @@ namespace RadiocomDataViewApp.Pages
         public int ArtistId { get => _artistWorkInfo.ArtistInfo.Id; }
 
 
-        public ArtistWork()
-        {
-            //SetupHeaderButtons();
-        }
-
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();

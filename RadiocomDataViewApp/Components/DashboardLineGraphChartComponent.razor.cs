@@ -35,7 +35,7 @@ namespace RadiocomDataViewApp.Components
         [Parameter]
         public Func<int, ChartColor> PointColorGenerator { get; set; }
         [Parameter]
-        public Func<IEnumerable<DashboardChartData>> GenerateChartDatas { get; set; }
+        public Func<Task<IEnumerable<DashboardChartData>>> GenerateChartDatas { get; set; }
         [Parameter]
         public string ScaleLabelFontColor { get; set; }
         public DashboardLineGraphChartComponent()
@@ -91,11 +91,11 @@ namespace RadiocomDataViewApp.Components
 
         }
 
-        public void RefreshChartData()
+        public async Task RefreshChartData()
         {
-            IEnumerable<DashboardChartData> newDatas = GenerateChartDatas?.Invoke();
-            Chart.Clear();
-            Chart.AddLabels(newDatas.Select(x => x.Label).ToArray());
+            IEnumerable<DashboardChartData> newDatas = await GenerateChartDatas();
+            await Chart.Clear();
+            await Chart.AddLabels(newDatas.Select(x => x.Label).ToArray());
 
             List<string> colors = new List<string>();
             for (int i = 0; i < newDatas.Count(); i++)

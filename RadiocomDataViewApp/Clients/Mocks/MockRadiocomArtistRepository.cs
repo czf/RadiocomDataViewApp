@@ -37,5 +37,10 @@ namespace RadiocomDataViewApp.Clients.Mocks
         {
             throw new NotImplementedException();
         }
+
+        public async Task<ArtistInfo> GetArtist(int artistId)
+        {
+            return await Task.FromResult( GetArtists().FirstOrDefault(x => x.Id == artistId));
+        }
     }
 }

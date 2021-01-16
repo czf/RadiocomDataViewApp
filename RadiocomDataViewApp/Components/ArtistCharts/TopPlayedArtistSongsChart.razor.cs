@@ -42,13 +42,13 @@ namespace RadiocomDataViewApp.Components.ArtistCharts
         private void NavigateToArtistArtistsWorkRouteOnBarClick(DashboardChartMouseEventArgs args)
         {
             BarChartDatasetXValue element = (BarChartDatasetXValue)args.DatasetElement;
-            NavManager.NavigateTo($"artist/{element.DataId}/works");
+            NavManager.NavigateTo($"artist/{element.DataId}/artistworks");
         }
 
-        private void UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
+        private async Task UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
         {
             ChartDataTimeRange = mostPlayedTimeRange;
-            Chart.RefreshChartData();
+            await Chart.RefreshChartData();
         }
 
         private IEnumerable<DashboardChartData> TopPlayedArtistSongs()

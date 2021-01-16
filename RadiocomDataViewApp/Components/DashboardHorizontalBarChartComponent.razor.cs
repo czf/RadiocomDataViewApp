@@ -58,11 +58,11 @@ namespace RadiocomDataViewApp.Components
 
         
 
-        public void RefreshChartData()
+        public async Task RefreshChartData()
         {
             IEnumerable<DashboardChartData> newDatas = GenerateChartDatas?.Invoke();
-            Chart.Clear();
-            Chart.AddLabels(newDatas.Select(x => x.Label).ToArray());
+            await Chart.Clear();
+            await Chart.AddLabels(newDatas.Select(x => x.Label).ToArray());
             
             List<string> colors = new List<string>();
             for(int i = 0; i < newDatas.Count(); i++)
@@ -87,8 +87,8 @@ namespace RadiocomDataViewApp.Components
             newBarChartDataset.HoverBackgroundColor.Clear();
             newBarChartDataset.HoverBorderColor.Clear();
             CurrentDataset = newBarChartDataset;
-            Chart.AddDataSet(newBarChartDataset);
-            Chart.Update();
+            await Chart.AddDataSet(newBarChartDataset);
+            await Chart.Update();
         }
 
         private HorizontalBarChart<BarChartDatasetXValue> Chart;

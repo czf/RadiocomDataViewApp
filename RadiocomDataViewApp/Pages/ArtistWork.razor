@@ -2,7 +2,7 @@
 @using RadiocomDataViewApp.Components.ArtistWorkCharts;
 <h3>@ArtistWorkName </h3>
 <Breadcrumb>
-	
+	<BreadcrumbItem><BreadcrumbLink To='@($"/artists")'>All Artists</BreadcrumbLink></BreadcrumbItem>
 	<BreadcrumbItem><BreadcrumbLink To='@($"/artist/{ArtistId}")'>@ArtistName</BreadcrumbLink></BreadcrumbItem>
 	<BreadcrumbItem Active="true"><BreadcrumbLink To='@($"/artistwork/{ArtistWorkId}")'>@ArtistWorkName</BreadcrumbLink></BreadcrumbItem>
 </Breadcrumb>

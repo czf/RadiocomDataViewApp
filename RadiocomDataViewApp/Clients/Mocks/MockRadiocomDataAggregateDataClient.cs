@@ -143,5 +143,31 @@ namespace RadiocomDataViewApp.Clients
             }
             return result;
         }
+
+        public async Task<List<ItemCount>> GetArtistPlayedOverTime(AggregateTimeRange timeRange, int artistId)
+        {
+            int multiplier = GetTimeRangeMultipler(timeRange);
+
+            List<ItemCount> result = new List<ItemCount>()
+            {
+                new ItemCount(){Count = 10 * multiplier, Name= GetOverTimeName(0, timeRange), ItemId = artistId},
+                new ItemCount(){Count = 2 * multiplier, Name= GetOverTimeName(1, timeRange), ItemId = artistId},
+                new ItemCount(){Count = 7 * multiplier, Name= GetOverTimeName(2, timeRange), ItemId = artistId},
+                new ItemCount(){Count = 2 * multiplier, Name= GetOverTimeName(3, timeRange), ItemId = artistId},
+                new ItemCount(){Count = 2 * multiplier, Name= GetOverTimeName(4, timeRange), ItemId = artistId},
+                new ItemCount(){Count = 1 * multiplier, Name= GetOverTimeName(5, timeRange), ItemId = artistId},
+                new ItemCount(){Count = 0 * multiplier, Name= GetOverTimeName(6, timeRange), ItemId = artistId},
+            };
+            if (timeRange == AggregateTimeRange.ThreeMonths || timeRange == AggregateTimeRange.AllTime)
+            {
+                result.Add(new ItemCount() { Count = 10 * multiplier, Name = GetOverTimeName(7, timeRange), ItemId = artistId });
+                result.Add(new ItemCount() { Count = 2 * multiplier, Name = GetOverTimeName(8, timeRange), ItemId = artistId });
+                result.Add(new ItemCount() { Count = 7 * multiplier, Name = GetOverTimeName(9, timeRange), ItemId = artistId });
+                result.Add(new ItemCount() { Count = 2 * multiplier, Name = GetOverTimeName(10, timeRange), ItemId = artistId });
+                result.Add(new ItemCount() { Count = 2 * multiplier, Name = GetOverTimeName(11, timeRange), ItemId = artistId });
+            }
+            result.Reverse();
+            return await Task.FromResult(result);
+        }
     }
 }

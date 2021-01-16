@@ -34,15 +34,15 @@ namespace RadiocomDataViewApp.Components.ArtistWorkCharts
 
             ChartDataTimeRange = AggregateTimeRange.SevenDays;
         }
-        private void UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
+        private async Task UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
         {
             ChartDataTimeRange = mostPlayedTimeRange;
-            Chart.RefreshChartData();
+            await Chart.RefreshChartData();
         }
-        private IEnumerable<DashboardChartData> SongPlayedOverTime()
+        private Task<IEnumerable<DashboardChartData>> SongPlayedOverTime()
         {
             List<ItemCount> radioComData = RadiocomDataAggregateDataClient.GetSongPlayedOverTime(ChartDataTimeRange, ArtistWorkId);
-            return radioComData.Select(x => new DashboardChartData() { Label = x.Name, Value = x.Count, DataId = x.ItemId });
+            return Task.FromResult( radioComData.Select(x => new DashboardChartData() { Label = x.Name, Value = x.Count, DataId = x.ItemId }));
 
         }
     }

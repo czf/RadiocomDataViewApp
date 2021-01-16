@@ -1,10 +1,21 @@
 ﻿@page "/artist/{ArtistId:int}"
 @using RadiocomDataViewApp.Components.ArtistCharts;
 
-<h3>Artist: </h3>
+<h3>@ArtistName</h3>
+
+<Breadcrumb>
+	<BreadcrumbItem><BreadcrumbLink To='@($"/artists")'>All Artists</BreadcrumbLink></BreadcrumbItem>
+	<BreadcrumbItem Active="true"><BreadcrumbLink To='@($"/artist/{ArtistId}")'>@ArtistName</BreadcrumbLink></BreadcrumbItem>
+</Breadcrumb>
 <Row>
+
 	<Column Class="col-md-8 col-sm-12 pb-1 pb-sm-0">
 		<TopPlayedArtistSongsChart ArtistId="@ArtistId" />
 	</Column>
 </Row>
 
+<Row>
+	<Column Class="col-md-8 col-sm-12 pb-1 pb-sm-0">
+		<ArtistPlayedOverTimeChart ArtistId="@ArtistId" />
+	</Column>
+</Row>
