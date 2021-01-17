@@ -110,7 +110,7 @@ namespace RadiocomDataViewApp.Clients
             
         }
 
-        public List<ItemCount> GetSongPlayedAndOtherPlayed(AggregateTimeRange timeRange, int artistWorkId)
+        public async Task<List<ItemCount>> GetSongPlayedAndOtherPlayed(AggregateTimeRange timeRange, int artistWorkId)
         {
             int multiplier = GetTimeRangeMultipler(timeRange);
             List<ItemCount> result = new List<ItemCount>()
@@ -118,13 +118,13 @@ namespace RadiocomDataViewApp.Clients
                 new ItemCount(){Count = 98 * multiplier, Name= "Other", ItemId = 0},
                 new ItemCount(){Count = 2 * multiplier, Name= GetOverTimeName(1, timeRange), ItemId = artistWorkId},
             };
-            return result;
+            return await Task.FromResult(result);
         }
 
-        private string GetOverTimeName(int index, AggregateTimeRange aggregateTimeRange)
+        private string GetOverTimeName(int index, AggregateTimeRange timeRange)
         {
             string result = string.Empty;
-            switch (aggregateTimeRange)
+            switch (timeRange)
             {
                 case AggregateTimeRange.None:
                     throw new InvalidEnumArgumentException("Must specify time range value other than None");
@@ -138,7 +138,7 @@ namespace RadiocomDataViewApp.Clients
                     result = DateTime.Now.AddMonths(index * -1).ToShortDateString();
                     break;
                 default:
-                    throw new NotSupportedException("Value: " + aggregateTimeRange.ToString());
+                    throw new NotSupportedException("Value: " + timeRange.ToString());
 
             }
             return result;
@@ -168,6 +168,20 @@ namespace RadiocomDataViewApp.Clients
             }
             result.Reverse();
             return await Task.FromResult(result);
+        }
+
+        public async Task<List<ItemCount>> GetArtistSongsPlayed(AggregateTimeRange timeRange, int artistId)
+        {
+            int multiplier = GetTimeRangeMultipler(timeRange);
+            return await Task.FromResult(new List<ItemCount>()
+            {
+                new ItemCount(){Count=100*multiplier,Name="song name", ItemId = 77},
+                new ItemCount(){Count=100*multiplier,Name="song", ItemId = 53},
+                new ItemCount(){Count=75*multiplier, Name="song name thats longer", ItemId=12},
+                new ItemCount(){Count=51*multiplier, Name="song 1111", ItemId = 9},
+                new ItemCount(){Count=51*multiplier, Name="song something", ItemId = 204},
+                new ItemCount(){Count=51*multiplier, Name="something song", ItemId = 513}
+            });
         }
     }
 }

@@ -25,7 +25,8 @@ namespace RadiocomDataViewApp.Interfaces
 
         List<ItemCount> GetSongPlayedOverTime(AggregateTimeRange timeRange, int artistWorkId);
 
-        List<ItemCount> GetSongPlayedAndOtherPlayed(AggregateTimeRange timeRange, int artistWorkId);
-        Task<List<ItemCount>> GetArtistPlayedOverTime(AggregateTimeRange chartDataTimeRange, int artistId);
+        Task<List<ItemCount>> GetSongPlayedAndOtherPlayed(AggregateTimeRange timeRange, int artistWorkId);
+        Task<List<ItemCount>> GetArtistPlayedOverTime(AggregateTimeRange timeRange, int artistId);
+        Task<List<ItemCount>> GetArtistSongsPlayed(AggregateTimeRange timeRange, int artistId);
     }
 }

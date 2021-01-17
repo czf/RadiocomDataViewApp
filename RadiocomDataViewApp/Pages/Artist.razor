@@ -9,13 +9,16 @@
 </Breadcrumb>
 <Row>
 
-	<Column Class="col-md-8 col-sm-12 pb-1 pb-sm-0">
+	<Column Class="col-lg-8 col-md-12 pb-1 pb-sm-0">
 		<TopPlayedArtistSongsChart ArtistId="@ArtistId" />
+	</Column>
+	<Column Class="col-lg-4 col-md-12 pb-1 pb-sm-0">
+		<ArtistPercentageOfArtistSongsPieChart ArtistId="@ArtistId" ArtistName="@ArtistName" />
 	</Column>
 </Row>
 
 <Row>
-	<Column Class="col-md-8 col-sm-12 pb-1 pb-sm-0">
+	<Column Class="col-lg-8 col-md-12 pb-1 pb-sm-0">
 		<ArtistPlayedOverTimeChart ArtistId="@ArtistId" />
 	</Column>
 </Row>

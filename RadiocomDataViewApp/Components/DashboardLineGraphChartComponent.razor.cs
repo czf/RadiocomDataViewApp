@@ -93,7 +93,7 @@ namespace RadiocomDataViewApp.Components
 
         public async Task RefreshChartData()
         {
-            IEnumerable<DashboardChartData> newDatas = await GenerateChartDatas();
+            IEnumerable<DashboardChartData> newDatas = await GenerateChartDatas.Invoke();
             await Chart.Clear();
             await Chart.AddLabels(newDatas.Select(x => x.Label).ToArray());
 

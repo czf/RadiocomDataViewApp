@@ -45,12 +45,11 @@ namespace RadiocomDataViewApp.Components.ArtistWorkCharts
         private void UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
         {
             ChartDataTimeRange = mostPlayedTimeRange;
-            Console.Write("djfoisajfiodsajfa\n\n\n");
             Chart.RefreshChartData();
         }
-        private IEnumerable<DashboardChartData> SongPercentageOfArtist()
+        private async Task<IEnumerable<DashboardChartData>> SongPercentageOfArtist()
         {
-            List<ItemCount> radioComData = RadiocomDataAggregateDataClient.GetSongPlayedAndOtherPlayed(ChartDataTimeRange, ArtistWorkId);
+            List<ItemCount> radioComData = await RadiocomDataAggregateDataClient.GetSongPlayedAndOtherPlayed(ChartDataTimeRange, ArtistWorkId);
             return radioComData.Select(x => new DashboardChartData() { Label = x.Name, Value = x.Count, DataId = x.ItemId });
 
         }
@@ -75,7 +74,7 @@ namespace RadiocomDataViewApp.Components.ArtistWorkCharts
         private static readonly ChartColor ViewedSongPieChartColor = ChartColor.FromRgba(255, 255, 255, 1);//white
         private static readonly ChartColor OtherSongsPieChartColor = ChartColor.FromRgba(104, 104, 103, 1);//grey
         
-        private string DashboardPieChartComponentTitle => $" Comparison with Other Songs Played by {ArtistName}";
+        private string DashboardPieChartComponentTitle => $"Comparison with Other Songs Played by {ArtistName}";
 
     }
 }

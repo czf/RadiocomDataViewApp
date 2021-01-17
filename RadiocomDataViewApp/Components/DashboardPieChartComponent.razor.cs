@@ -20,8 +20,9 @@ namespace RadiocomDataViewApp.Components
 
         [Parameter]
         public string ChartTitle { get; set; }
+
         [Parameter]
-        public Func<IEnumerable<DashboardChartData>> GenerateChartDatas { get; set; }
+        public Func<Task<IEnumerable<DashboardChartData>>> GenerateChartDatas { get; set; }
         [Parameter]
         public Func<int, ChartColor> SliceColorGenerator { get; set; }
         
@@ -36,7 +37,7 @@ namespace RadiocomDataViewApp.Components
             #region chartOptions
             ChartOptionsObj = new
             {
-                Legend = new { Display = false },
+                Legend = new { Display = true},
                 //Scales = new
                 //{
                 //    YAxes = new object[]
@@ -73,12 +74,12 @@ namespace RadiocomDataViewApp.Components
             #endregion chartOptions
         }
 
-        public void RefreshChartData()
+        public async Task RefreshChartData()
         {
             Console.WriteLine("refresh picharet");
-            IEnumerable<DashboardChartData> newDatas = GenerateChartDatas?.Invoke();
-            Chart.Clear();
-            Chart.AddLabels(newDatas.Select(x => x.Label).ToArray());
+            IEnumerable<DashboardChartData> newDatas = await GenerateChartDatas.Invoke();
+            await Chart.Clear();
+            await Chart.AddLabels(newDatas.Select(x => x.Label).ToArray());
 
             List<string> colors = new List<string>();
             for (int i = 0; i < newDatas.Count(); i++)
@@ -103,29 +104,20 @@ namespace RadiocomDataViewApp.Components
             newChartDataset.HoverBackgroundColor.Clear();
             newChartDataset.HoverBorderColor.Clear();
             CurrentDataset = newChartDataset;
-            Chart.AddDataSet(newChartDataset);
-            Chart.Update();
+            await Chart.AddDataSet(newChartDataset);
+            await Chart.Update();
         }
-
-        protected override void OnAfterRender(bool firstRender)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            base.OnAfterRender(firstRender);
+            await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                Console.Write("ridnejejf");
-                RefreshChartData();
+                await RefreshChartData();
             }
         }
+       
 
-        //private async Task OnSliceElementClickedHandler(ChartMouseEventArgs args)
-        //{
-
-        //    DashboardChartMouseEventArgs chartMouseEventArgs = new DashboardChartMouseEventArgs(args.DatasetIndex, args.Index, args.Model);
-        //    chartMouseEventArgs.DatasetElement = CurrentDataset.Data[args.Index];
-        //    await OnDashboardChartElementClick.InvokeAsync(chartMouseEventArgs);
-        //}
-
-        private async Task OnPieChartClick(ChartMouseEventArgs args)
+        private async Task OnPieChartClickHandler(ChartMouseEventArgs args)
         {
             DashboardChartMouseEventArgs chartMouseEventArgs = new DashboardChartMouseEventArgs(args.DatasetIndex, args.Index, args.Model);
             chartMouseEventArgs.DatasetElement = CurrentDataset.Data[chartMouseEventArgs.Index];

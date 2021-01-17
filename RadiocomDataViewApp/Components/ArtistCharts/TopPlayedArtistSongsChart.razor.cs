@@ -42,7 +42,7 @@ namespace RadiocomDataViewApp.Components.ArtistCharts
         private void NavigateToArtistArtistsWorkRouteOnBarClick(DashboardChartMouseEventArgs args)
         {
             BarChartDatasetXValue element = (BarChartDatasetXValue)args.DatasetElement;
-            NavManager.NavigateTo($"artist/{element.DataId}/artistworks");
+            NavManager.NavigateTo($"artistwork/{element.DataId}/");
         }
 
         private async Task UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
