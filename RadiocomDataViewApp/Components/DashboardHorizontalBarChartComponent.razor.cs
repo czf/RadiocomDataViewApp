@@ -154,12 +154,12 @@ namespace RadiocomDataViewApp.Components
         => string.IsNullOrWhiteSpace(ScaleLabelFontColor) ?  "#fff" : ScaleLabelFontColor;
         protected BarChartDataset<BarChartDatasetXValue> CurrentDataset { get; set; }
 
-        protected override void OnAfterRender(bool firstRender)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            base.OnAfterRender(firstRender);
+            await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                RefreshChartData();
+                await RefreshChartData();
             }
         }
     }

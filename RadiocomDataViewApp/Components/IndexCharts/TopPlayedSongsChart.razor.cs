@@ -53,10 +53,10 @@ namespace RadiocomDataViewApp.Components.IndexCharts
             NavManager.NavigateTo($"artistwork/{element.DataId}");
         }
 
-        private void UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
+        private async Task UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
         {
             ChartDataTimeRange = mostPlayedTimeRange;
-            Chart.RefreshChartData();
+            await Chart.RefreshChartData();
         }
 
     }

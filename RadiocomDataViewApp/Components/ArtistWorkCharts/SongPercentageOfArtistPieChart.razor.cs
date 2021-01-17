@@ -42,10 +42,10 @@ namespace RadiocomDataViewApp.Components.ArtistWorkCharts
 
             ChartDataTimeRange = AggregateTimeRange.SevenDays;
         }
-        private void UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
+        private async Task UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
         {
             ChartDataTimeRange = mostPlayedTimeRange;
-            Chart.RefreshChartData();
+            await Chart.RefreshChartData();
         }
         private async Task<IEnumerable<DashboardChartData>> SongPercentageOfArtist()
         {

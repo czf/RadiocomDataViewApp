@@ -14,7 +14,7 @@ namespace RadiocomDataViewApp.Components
         private const string DEFAULT_SLICE_COLOR = "#FFF";
 
         private PieChart<int> Chart;
-        public readonly object ChartOptionsObj;
+        public  object ChartOptionsObj;
 
 
 
@@ -37,38 +37,9 @@ namespace RadiocomDataViewApp.Components
             #region chartOptions
             ChartOptionsObj = new
             {
-                Legend = new { Display = true},
-                //Scales = new
-                //{
-                //    YAxes = new object[]
-                //    {
-                //        new
-                //        {
-                //            ScaleLabel = new
-                //            {
-                //                FontColor = GetScaleFontColor(),
-                //                Display = true,
-                //                LabelString = YAxisLabel ?? string.Empty
-                //            },
-                //            Ticks = StandardTicks
+                Legend = new { Display = true },
 
-                //        }
-                //    },
-                //    XAxes = new object[]
-                //    {
-                //        new
-                //        {
-                //            ScaleLabel = new
-                //            {
-                //                FontColor = GetScaleFontColor(),
-                //                Display = true,
-                //                LabelString = XAxisLabel ?? string.Empty
-                //            },
-                //            Ticks = StandardTicks
-                //        }
-                //    }
-                //},
-                AspectRatio = 1.5
+                AspectRatio = .75
 
             };
             #endregion chartOptions
@@ -107,6 +78,7 @@ namespace RadiocomDataViewApp.Components
             await Chart.AddDataSet(newChartDataset);
             await Chart.Update();
         }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);

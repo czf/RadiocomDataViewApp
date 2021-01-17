@@ -50,16 +50,13 @@ namespace RadiocomDataViewApp.Components.ArtistCharts
         private async Task<IEnumerable<DashboardChartData>> ArtistPercentageOfArtistSongs()
         {
             List<ItemCount> radioComData = await RadiocomDataAggregateDataClient.GetArtistSongsPlayed(ChartDataTimeRange, ArtistId);
+            CurrentDataset = radioComData;
             return radioComData.Select(x => new DashboardChartData() { Label = x.Name, Value = x.Count, DataId = x.ItemId });
 
         }
+
+        private List<ItemCount> CurrentDataset;
         private const decimal SLICE_SHADE_STEP = 0.2023809523809524m;//https://stackoverflow.com/a/40619637
-        //private static readonly ImmutableList<ChartColor> ChartColors 
-        //    = ImmutableList.Create(
-        //        ChartColor.FromRgba(255, 255, 255, 1),//white
-        //        ChartColor.FromRgba(104, 104, 103, 1),//grey
-        //        ChartColor.FromRgba(170, 165, 165,1)
-        //    );
         
         private ChartColor SliceColorGenerator (int index) =>
             ChartColor.FromRgba(
@@ -69,9 +66,10 @@ namespace RadiocomDataViewApp.Components.ArtistCharts
                 1);
         
 
-        private void OnDashboardPieChartClick()
+        private void OnDashboardPieChartClick(DashboardChartMouseEventArgs eventArgs)
         {
-            NavManager.NavigateTo($"/artist/{ArtistId}/artistworks");
+            int songId = CurrentDataset[eventArgs.Index].ItemId;            
+            NavManager.NavigateTo($"/artistwork/{songId}");
         }
         private string DashboardPieChartComponentTitle => $"Comparison of Songs by {ArtistName}";
 

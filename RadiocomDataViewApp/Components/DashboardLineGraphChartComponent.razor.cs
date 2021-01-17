@@ -122,17 +122,17 @@ namespace RadiocomDataViewApp.Components
             };
             //newChartDataset.HoverBorderColor.Clear();
             CurrentDataset = newChartDataset;
-            Chart.AddDataSet(newChartDataset);
-            Chart.Update();
+            await Chart.AddDataSet(newChartDataset);
+            await Chart.Update();
         }
         protected LineChartDataset<DashboardChartDatasetYValue> CurrentDataset { get; set; }
 
-        protected override void OnAfterRender(bool firstRender)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            base.OnAfterRender(firstRender);
+            await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                RefreshChartData();
+                await RefreshChartData();
             }
         }
 

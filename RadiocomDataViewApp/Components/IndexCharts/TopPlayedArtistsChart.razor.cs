@@ -42,10 +42,10 @@ namespace RadiocomDataViewApp.Components.IndexCharts
             BarChartDatasetXValue element = (BarChartDatasetXValue)args.DatasetElement;
             NavManager.NavigateTo($"artist/{element.DataId}");
         }
-        private void UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
+        private async Task UpdateChartDataTimeRange(AggregateTimeRange mostPlayedTimeRange)
         {
             ChartDataTimeRange = mostPlayedTimeRange;
-            Chart.RefreshChartData();
+            await Chart.RefreshChartData();
         }
     }
 }
