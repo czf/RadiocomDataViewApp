@@ -147,7 +147,7 @@ namespace RadiocomDataViewApp.Components
 
         protected override bool ShouldRender()
         {
-            //Console.WriteLine("should render:" + Chart.Data != null && (Chart.Data.Datasets?.Any(x => x.Data?.Any() ?? false) ?? false) && base.ShouldRender());
+            
             return Chart.Data != null && (Chart.Data.Datasets?.Any(x => x.Data?.Any() ?? false) ?? false) && base.ShouldRender();
         }
         private string GetScaleFontColor()

@@ -1,63 +1,72 @@
-﻿<LayoutSider>
+﻿@using RadiocomDataViewApp.Interfaces;
+@using Microsoft.AspNetCore.Components;
+
+<LayoutSider>
 	<LayoutSiderContent>
 		<Bar Mode="BarMode.VerticalInline"
-				CollapseMode="BarCollapseMode.Small"
-				Breakpoint="Breakpoint.Desktop"
-				NavigationBreakpoint="Breakpoint.Tablet"
-				ThemeContrast="ThemeContrast.None"
-				@bind-Visible="siderVisible"
-				>
+			 CollapseMode="BarCollapseMode.Small"
+			 Breakpoint="Breakpoint.Desktop"
+			 NavigationBreakpoint="Breakpoint.Tablet"
+			 ThemeContrast="ThemeContrast.None"
+			 @bind-Visible="siderVisible">
 			<BarBrand>
 				<BarItem>
 					<BarLink To="">
-						<BarIcon IconName="IconName.Dashboard" />
-						Blazorise Demo
+						<BarIcon IconName="IconName.Home" />
+						Home
 					</BarLink>
 				</BarItem>
 			</BarBrand>
 			<BarMenu>
 				<BarStart>
 					<BarItem>
-						<BarLink To="#home">
-							<BarIcon IconName="IconName.Dashboard" />
-							Home
+						<BarLink To="/artistworks/">
+							<BarIcon IconName="IconName.Music" />
+							Songs
 						</BarLink>
 					</BarItem>
 					<BarItem>
-						<BarLink To="#docs">Documentation</BarLink>
+						<BarLink To="/artists/">
+							<BarIcon IconName="IconName.Users" />
+							Artists
+						</BarLink>
 					</BarItem>
 					<BarItem>
-						<BarDropdown>
-							<BarDropdownToggle>
-								<BarIcon IconName="IconName.Edit" />
-								Dropdown
-							</BarDropdownToggle>
-							<BarDropdownMenu Style="background-color:gray">
-								<BarDropdownItem>Action</BarDropdownItem>
-								<BarDropdownItem>Another action</BarDropdownItem>
-							</BarDropdownMenu>
-						</BarDropdown>
+						<BarLink Clicked="@AboutClick">
+							<BarIcon IconName="IconName.InfoCircle" />
+							About
+						</BarLink>
 					</BarItem>
+					
 				</BarStart>
 			</BarMenu>
 		</Bar>
 	</LayoutSiderContent>
 </LayoutSider>
-	
 
-		@code{
 
-			public void MenuHamburgerClick()
-			{
-				siderVisible = !siderVisible;
-				StateHasChanged();
-			}
-			public Sidebar sidebar;
+@code{
+	[Inject]
+	public IVisitService VisitService { get; set; }
 
-			private bool siderVisible = true;
-			void ToggleSidebar()
-			{
-				siderVisible = !siderVisible;
-				//sidebar.Toggle();
-			}
-		}
+	async Task AboutClick()
+	{
+		Console.WriteLine("about");
+		await VisitService.ClearVisitedStateAsync();
+		StateHasChanged();
+	}
+
+	public void MenuHamburgerClick()
+	{
+		siderVisible = !siderVisible;
+		StateHasChanged();
+	}
+	public Sidebar sidebar;
+
+	private bool siderVisible = true;
+	void ToggleSidebar()
+	{
+		siderVisible = !siderVisible;
+		//sidebar.Toggle();
+	}
+}
