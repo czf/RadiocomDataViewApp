@@ -20,11 +20,12 @@ namespace RadiocomDataViewApp.Pages
         private string _artistName;
         private static readonly Func<ArtistWorkDisplay, string> HrefGenerator = item => $"artistwork/{item.Id}";
         private IEnumerable<ArtistWorkInfo> _artistWorkInfos;
-        protected override async Task OnParametersSetAsync()
+        protected override Task OnParametersSetAsync()
         {
-            await base.OnParametersSetAsync();
-            _artistWorkInfos = await RadiocomArtistWorkRepository.GetArtist_ArtistWorks(ArtistId);
-            _artistName = _artistWorkInfos.FirstOrDefault()?.ArtistInfo.Name;
+            return base.OnParametersSetAsync().ContinueWith(
+            x => InvokeAsync(async () => _artistWorkInfos = await RadiocomArtistWorkRepository.GetArtist_ArtistWorks(ArtistId)))
+                .Unwrap()
+                .ContinueWith(x => _artistName = _artistWorkInfos.FirstOrDefault()?.ArtistInfo.Name);
         }
     }
 }

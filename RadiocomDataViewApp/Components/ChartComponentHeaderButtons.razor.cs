@@ -28,10 +28,8 @@ namespace RadiocomDataViewApp.Components
         private async Task InvokeButtonStateEvent(MouseEventArgs mouseEventArgs, EventCallback callback, HeaderButtonState buttonState)
         {
             HeaderButtonState selected = null;
-            Console.WriteLine("invoke state event");
             foreach (var state in HeaderButtonConfigs)
             {
-                Console.WriteLine($"text:{state.Text} color:{state.ButtonColor}");
                 state.ButtonColor = state == buttonState ? Color.Secondary : Color.Primary;
                 state.Active = state == buttonState;
                 if(  state == buttonState)

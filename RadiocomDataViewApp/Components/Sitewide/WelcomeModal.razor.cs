@@ -19,27 +19,15 @@ namespace RadiocomDataViewApp.Components.Sitewide
         private bool _hasVisited;
 
 
-        protected override void OnAfterRender(bool firstRender)
-        {
-            //base.OnAfterRender(firstRender);
-            //if (firstRender)
-            //{
-            //    Welcome.Show();
-            //}
-        }
-
         private Task ClosedModal()
         {
             Task visted = VisitService.SetVisitedAsync();            
             return visted;
         }
 
-        //private async Task ClosedModal()
-        //{
-        //   
-        //}
 
-        private void CloseClick() {
+        private void CloseClick() 
+        {
 
 
             Welcome.Hide();
@@ -66,7 +54,6 @@ namespace RadiocomDataViewApp.Components.Sitewide
             await base.OnAfterRenderAsync(firstRender);
             if (!_hasVisited)
             {
-                Console.WriteLine("after");
                 Welcome.Show();
             }
             
@@ -75,12 +62,5 @@ namespace RadiocomDataViewApp.Components.Sitewide
 
 
 
-        //public override async Task SetParametersAsync(ParameterView parameters)
-        //{
-
-        //    await base.SetParametersAsync(parameters);
-        //    _hasVisited = await VisitService.HasVisitedAsync();
-
-        //}
     }
 }

@@ -44,6 +44,13 @@ namespace RadiocomDataViewApp
                 DateTime welcomeDate =  builder.Configuration.GetValue<DateTime>(CONFIGKEY_WELCOME_DATE);
                 return new VisitService(x.GetService<ILocalStorageService>(), welcomeDate);            
             });
+            builder.Services.AddScoped<IUpdateService>(x =>
+            {
+                DateTime welcomeDate = builder.Configuration.GetValue<DateTime>(CONFIGKEY_WELCOME_DATE);
+                return new UpdateService(x.GetService<HttpClient>(), welcomeDate);
+            });
+
+
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddBlazoredLocalStorage();
             

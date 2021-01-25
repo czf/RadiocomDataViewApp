@@ -47,7 +47,6 @@ namespace RadiocomDataViewApp.Components
 
         public async Task RefreshChartData()
         {
-            Console.WriteLine("refresh picharet");
             IEnumerable<DashboardChartData> newDatas = await GenerateChartDatas.Invoke();
             await Chart.Clear();
             await Chart.AddLabels(newDatas.Select(x => x.Label).ToArray());
