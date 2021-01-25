@@ -15,9 +15,20 @@ namespace RadiocomDataViewApp.Pages
         [Inject]
         public IRadiocomArtistRepository RadiocomArtistRepository { get; set; }
 
-       [Parameter]
+        [Parameter]
         public string AlphaChar { get; set; }
 
         Func<ArtistInfo, string> HrefGenerator = item => $"artist/{item.Id}";
+
+        IEnumerable<ArtistInfo> artists;
+
+        protected override Task OnInitializedAsync()
+        {
+            return base.OnInitializedAsync().ContinueWith(x =>
+                InvokeAsync(async () => artists = (await RadiocomArtistRepository.GetArtistsAsync()).OrderBy(x => x.Name))
+            ).Unwrap();
+            
+        }
+
     }
 }

@@ -19,17 +19,18 @@ namespace RadiocomDataViewApp.Clients.Mocks
             _radiocomArtistRepository = radiocomArtistRepository;
         }
 
-        public IEnumerable<ArtistWorkInfo> GetArtistWorks()
+        public async Task<IEnumerable<ArtistWorkInfo>> GetArtistWorksAsync()
         {
-            IEnumerable<ArtistInfo> artists = _radiocomArtistRepository.GetArtists();
+            
+            IEnumerable<ArtistInfo> artists = await _radiocomArtistRepository.GetArtistsAsync();
 
             int artistWorksCount = 0;
-            var artistInfosWorkCount = artists.Select(x =>
+            var artistInfosWorkCount = await Task.FromResult( artists.Select(x =>
             {
                 int workCount = random.Next(1,15);
                 artistWorksCount += workCount;
                 return ( artist: x,  workCount);
-            }).ToList();
+            }).ToList());
 
 
 
@@ -46,6 +47,10 @@ namespace RadiocomDataViewApp.Clients.Mocks
                         ArtistInfo = GetRandomArtist(artistInfosWorkCount)
 
                     });
+                    if (a % 10 == 0)
+                    {
+                        await Task.Delay(1);
+                    }
                 }
 
 
@@ -70,14 +75,14 @@ namespace RadiocomDataViewApp.Clients.Mocks
             throw new NotImplementedException();
         }
 
-        public async Task<ArtistWorkInfo> GetArtistWork(int id)
+        public async Task<ArtistWorkInfo> GetArtistWorkAsync(int id)
         {
-            return await Task.FromResult(GetArtistWorks().First(x => x.Id == id));
+            return (await GetArtistWorksAsync()).First(x => x.Id == id);
         }
 
         public async Task<IEnumerable<ArtistWorkInfo>> GetArtist_ArtistWorks(int artistId)
         {
-            return await Task.FromResult( GetArtistWorks().Where(x => x.ArtistInfo.Id == artistId));
+            return (await GetArtistWorksAsync()).Where(x => x.ArtistInfo.Id == artistId);
         }
     }
 }

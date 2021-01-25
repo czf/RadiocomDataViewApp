@@ -58,13 +58,10 @@ namespace RadiocomDataViewApp.Components
         {
             ChildRender = (RenderFragment<RenderInput<TItem>>)((input) => (RenderFragment)( (builder2) =>
             {
-                Console.WriteLine("childRender");
-
                 builder2.OpenComponent<Heading>(input.line);
                 builder2.AddAttribute(input.line++, "Size", HeadingSize.Is3);
                 builder2.AddAttribute(input.line++, "ChildContent", (RenderFragment)((builder3) => builder3.AddContent(0, input.InputItems?.First().Name?.ToUpperInvariant()?.First())));
                 builder2.Class("border-bottom", input.line++);
-                //<Heading Size="HeadingSize.Is3">A</Heading>
                 builder2.CloseComponent();
                 foreach (var item in input.InputItems)
                 {
@@ -81,26 +78,6 @@ namespace RadiocomDataViewApp.Components
     }
 
     
-
-//	@typeparam TItem
-
-//@using RadiocomDataViewApp.Objects.Dto
-//@{
-//		foreach (var item in Items)
-//		{
-
-//		< NavLink href = "@ListItemHrefPattern(item)" >
-//			 @item.Name
-//		 </ NavLink >
-//				@*< a href = "ListItemHrefPattern(item)" >
-		 
-//					 < p > @item.Name </ p >
-		 
-//				 < b > "@ListItemHrefPattern(item)" </ b >
-		 
-//				 </ a > *@
-//	}
-//	}
 
 
 }

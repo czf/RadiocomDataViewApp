@@ -3,6 +3,11 @@
 @page "/artists/{AlphaChar?}"
 <h3>Artists</h3>
 
-
-<ListComponent TItem="ArtistInfo" Items="@RadiocomArtistRepository.GetArtists().OrderBy(x => x.Name)" ListItemHrefGenerator="HrefGenerator" />
-
+@if (artists != null)
+{
+	<ListComponent TItem="ArtistInfo" Items="artists" ListItemHrefGenerator="HrefGenerator" />
+}
+else
+{
+	<p>Loading</p >
+}

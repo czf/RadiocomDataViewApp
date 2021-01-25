@@ -13,7 +13,7 @@ namespace RadiocomDataViewApp.Clients.Mocks
 
         private List<ArtistInfo> _artists;
 
-        public IEnumerable<ArtistInfo> GetArtists()
+        public async Task<IEnumerable<ArtistInfo>> GetArtistsAsync()
         {
             int artistsCount = random.Next(215, 300);
             if(_artists == null)
@@ -26,10 +26,15 @@ namespace RadiocomDataViewApp.Clients.Mocks
                     {
                         Id = a,
                         Name = MockUtils.RandomString(3, 20)
-                    }) ;
+                    });
+                    if (a % 10 == 0)
+                    {
+                        await Task.Delay(1);
+                    }
+
                 }
             }
-            return _artists;
+             return await Task.FromResult(_artists);
             
         }
 
@@ -38,9 +43,9 @@ namespace RadiocomDataViewApp.Clients.Mocks
             throw new NotImplementedException();
         }
 
-        public async Task<ArtistInfo> GetArtist(int artistId)
+        public async Task<ArtistInfo> GetArtistAsync(int artistId)
         {
-            return await Task.FromResult( GetArtists().FirstOrDefault(x => x.Id == artistId));
+            return (await GetArtistsAsync()).FirstOrDefault(x => x.Id == artistId);
         }
     }
 }

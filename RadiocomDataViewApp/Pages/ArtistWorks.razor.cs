@@ -20,7 +20,22 @@ namespace RadiocomDataViewApp.Pages
 
         Func<ArtistWorkDisplay, string> HrefGenerator = item => $"artistwork/{item.Id}";
 
+        IEnumerable<ArtistWorkDisplay> artistWorks;
 
-        
+        protected override Task OnInitializedAsync()
+        {
+             return base.OnInitializedAsync()
+                .ContinueWith(x=> 
+                    InvokeAsync(async () =>
+                        artistWorks = (await RadiocomArtistWorkRepository.GetArtistWorksAsync())
+                                        .Select(x => new ArtistWorkDisplay(x))
+                                        .OrderBy(x => x.Name)))
+                .Unwrap();
+            //artistWorks = null;
+            
+            //await 
+            
+        }
+
     }
 }

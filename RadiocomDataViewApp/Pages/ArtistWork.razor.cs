@@ -20,16 +20,19 @@ namespace RadiocomDataViewApp.Pages
         public int ArtistId { get => _artistWorkInfo.ArtistInfo.Id; }
 
 
-        protected override async Task OnParametersSetAsync()
+        protected override Task OnParametersSetAsync()
         {
-            await base.OnParametersSetAsync();
-            _artistWorkInfo = await RadiocomArtistWorkClient.GetArtistWork(ArtistWorkId);
-            
-            
+            //await base.OnParametersSetAsync();
+            //_artistWorkInfo = await RadiocomArtistWorkRepository.GetArtistWork(ArtistWorkId);
+
+            return base.OnParametersSetAsync().ContinueWith(x =>
+                InvokeAsync(async () => _artistWorkInfo = (await RadiocomArtistWorkRepository.GetArtistWorkAsync(ArtistWorkId)))
+            ).Unwrap();
+
         }
 
-        
+
         [Inject]
-        public IRadiocomArtistWorkRepository RadiocomArtistWorkClient { get; set; }
+        public IRadiocomArtistWorkRepository RadiocomArtistWorkRepository { get; set; }
     }
 }

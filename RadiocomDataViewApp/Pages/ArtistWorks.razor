@@ -3,5 +3,10 @@
 @page "/artistworks/{AlphaChar?}"
 <h3>Songs</h3>
 
-
-<ListComponent TItem="ArtistWorkDisplay" Items="@RadiocomArtistWorkRepository.GetArtistWorks().Select(x=> new ArtistWorkDisplay(x)).OrderBy(x => x.Name)" ListItemHrefGenerator="HrefGenerator" />
+@if (artistWorks != null)
+{
+<ListComponent TItem="ArtistWorkDisplay" Items="artistWorks" ListItemHrefGenerator="HrefGenerator" />
+}
+else {
+<p>Loading</p>
+		}

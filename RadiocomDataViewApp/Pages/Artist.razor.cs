@@ -14,13 +14,14 @@ namespace RadiocomDataViewApp.Pages
 
         public string ArtistName { get => _artist.Name; }
         [Inject]
-        public IRadiocomArtistRepository RadiocomArtistClient { get; set; }
+        public IRadiocomArtistRepository RadiocomArtistRepository { get; set; }
 
-        protected override async Task OnParametersSetAsync()
+        protected override Task OnParametersSetAsync()
         {
-            await base.OnParametersSetAsync();
-            _artist = await RadiocomArtistClient.GetArtist(ArtistId);
-
+            //_artist = await RadiocomArtistClient.GetArtist(ArtistId);
+             return base.OnParametersSetAsync().ContinueWith(x =>
+                InvokeAsync(async () => _artist = (await RadiocomArtistRepository.GetArtistAsync(ArtistId)))
+            ).Unwrap();
 
         }
 

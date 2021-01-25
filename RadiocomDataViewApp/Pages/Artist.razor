@@ -1,24 +1,31 @@
 ﻿@page "/artist/{ArtistId:int}"
 @using RadiocomDataViewApp.Components.ArtistCharts;
+@if (_artist!=null)
+{
+	<h3>@ArtistName</h3>
 
-<h3>@ArtistName</h3>
+	<Breadcrumb>
+		<BreadcrumbItem><BreadcrumbLink To='@($"/artists")'>All Artists</BreadcrumbLink></BreadcrumbItem>
+		<BreadcrumbItem Active="true"><BreadcrumbLink To='@($"/artist/{ArtistId}")'>@ArtistName</BreadcrumbLink></BreadcrumbItem>
+	</Breadcrumb>
 
-<Breadcrumb>
-	<BreadcrumbItem><BreadcrumbLink To='@($"/artists")'>All Artists</BreadcrumbLink></BreadcrumbItem>
-	<BreadcrumbItem Active="true"><BreadcrumbLink To='@($"/artist/{ArtistId}")'>@ArtistName</BreadcrumbLink></BreadcrumbItem>
-</Breadcrumb>
-<Row>
+	<Row>
 
-	<Column Class="col-lg-8 col-md-12 pb-1 pb-sm-0">
-		<TopPlayedArtistSongsChart ArtistId="@ArtistId" />
-	</Column>
-	<Column Class="col-lg-4 col-md-12 pb-1 pb-sm-0">
-		<ArtistPercentageOfArtistSongsPieChart ArtistId="@ArtistId" ArtistName="@ArtistName" />
-	</Column>
-</Row>
+		<Column Class="col-lg-8 col-md-12 pb-1 pb-sm-0">
+			<TopPlayedArtistSongsChart ArtistId="@ArtistId" />
+		</Column>
+		<Column Class="col-lg-4 col-md-12 pb-1 pb-sm-0">
+			<ArtistPercentageOfArtistSongsPieChart ArtistId="@ArtistId" ArtistName="@ArtistName" />
+		</Column>
+	</Row>
 
-<Row>
-	<Column Class="col-lg-8 col-md-12 pb-1 pb-sm-0">
-		<ArtistPlayedOverTimeChart ArtistId="@ArtistId" />
-	</Column>
-</Row>
+	<Row>
+		<Column Class="col-lg-8 col-md-12 pb-1 pb-sm-0">
+			<ArtistPlayedOverTimeChart ArtistId="@ArtistId" />
+		</Column>
+	</Row>
+}
+else
+{
+	<p>Loading...</p>
+}

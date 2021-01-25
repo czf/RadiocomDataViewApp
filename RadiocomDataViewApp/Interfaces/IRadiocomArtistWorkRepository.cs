@@ -8,10 +8,10 @@ namespace RadiocomDataViewApp.Interfaces
 {
     public interface IRadiocomArtistWorkRepository
     {
-        IEnumerable<ArtistWorkInfo> GetArtistWorks();
+        Task<IEnumerable<ArtistWorkInfo>> GetArtistWorksAsync();
         IEnumerable<ArtistWorkInfo> GetArtistWorks(char alphaFilter);
         Task<IEnumerable<ArtistWorkInfo>> GetArtist_ArtistWorks(int artistId);
-        Task<ArtistWorkInfo> GetArtistWork(int id);
+        Task<ArtistWorkInfo> GetArtistWorkAsync(int id);
 
     }
 }
