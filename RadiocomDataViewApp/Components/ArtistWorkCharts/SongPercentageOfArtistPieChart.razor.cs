@@ -69,7 +69,7 @@ namespace RadiocomDataViewApp.Components.ArtistWorkCharts
         }
         private void OnDashboardPieChartClick()
         {
-            NavManager.NavigateTo($"/artist/{ArtistId}/artistworks");
+            NavManager.NavigateTo($"artist/{ArtistId}/artistworks");
         }
         private static readonly ChartColor ViewedSongPieChartColor = ChartColor.FromRgba(255, 255, 255, 1);//white
         private static readonly ChartColor OtherSongsPieChartColor = ChartColor.FromRgba(104, 104, 103, 1);//grey

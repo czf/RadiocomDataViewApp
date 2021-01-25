@@ -69,7 +69,7 @@ namespace RadiocomDataViewApp.Components.ArtistCharts
         private void OnDashboardPieChartClick(DashboardChartMouseEventArgs eventArgs)
         {
             int songId = CurrentDataset[eventArgs.Index].ItemId;            
-            NavManager.NavigateTo($"/artistwork/{songId}");
+            NavManager.NavigateTo($"artistwork/{songId}");
         }
         private string DashboardPieChartComponentTitle => $"Comparison of Songs by {ArtistName}";
 

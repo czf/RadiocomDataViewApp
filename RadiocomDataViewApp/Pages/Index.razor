@@ -6,7 +6,6 @@
 @inject IRadiocomDataAggregateDataClient RadiocomDataAggregateDataClient ;
 @using RadiocomDataViewApp.Components.IndexCharts;
 
-@*<div class="pb-5"><p>asdjfosadjf jfdios fjdsoapfjdsaif jdsiafjdisa pfdjsafpd jsaifodpsa jfidospafjd isop</p></div>*@
 <Row>
 	<Column Class="col-lg-4 col-md-6 col-sm-12 pb-1 pb-sm-0">
 		<TopPlayedSongsChart />
@@ -15,14 +14,8 @@
 		<TopPlayedArtistsChart />
 	</Column>
 	<Column Class="col-lg-4 col-md-6 col-sm-12 pb-1 pb-sm-0 flex-column d-flex">
-		@*Style="display:flex;flex-direction:column;"*@
 		<TotalUniqueSongsMetric />
 		<TotalUniqueArtistsMetric />
 
 	</Column>
 </Row>
-
-<div>
-
-	<Tooltip Text="Hello tooltip"><p>@env.IsDevelopment</p></Tooltip>
-</div>

@@ -22,9 +22,7 @@ namespace RadiocomDataViewApp.Pages
 
         protected override Task OnParametersSetAsync()
         {
-            //await base.OnParametersSetAsync();
-            //_artistWorkInfo = await RadiocomArtistWorkRepository.GetArtistWork(ArtistWorkId);
-
+            
             return base.OnParametersSetAsync().ContinueWith(x =>
                 InvokeAsync(async () => _artistWorkInfo = (await RadiocomArtistWorkRepository.GetArtistWorkAsync(ArtistWorkId)))
             ).Unwrap();
