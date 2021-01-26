@@ -32,7 +32,7 @@ namespace RadiocomDataViewApp.Services
         private async void HasApplicationUpdate(object state)
         {
 
-            bool welcomeHasChanged = await _httpClient.GetFromJsonAsync<ApplicationUpdateCheck>("/appsettings.json?r=" + _random.Next())
+            bool welcomeHasChanged = await _httpClient.GetFromJsonAsync<ApplicationUpdateCheck>("appsettings.json?r=" + _random.Next())
                .ContinueWith(x => _welcomeTime != x.Result.welcome);
             if (welcomeHasChanged)
             {
