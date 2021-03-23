@@ -38,7 +38,13 @@ namespace RadiocomDataViewApp.Clients.Live
 
                 HttpResponseMessage responseMessage = await _httpClient.PostAsJsonAsync(_endpointAddress + "ArtistWorkInfos", request);
                 string responseBody = await responseMessage.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<List<ArtistWorkInfo>>(responseBody)?.FirstOrDefault();
+                ArtistWorkInfoSource temp = JsonConvert.DeserializeObject<List<ArtistWorkInfoSource>>(responseBody)?.FirstOrDefault();
+                result = new ArtistWorkInfo()
+                {
+                    ArtistInfo = await _radiocomArtistRepository.GetArtistAsync(temp.ArtistId),
+                    Id = temp.Id,
+                    Name = temp.Title
+                };
                 await _localStorageService.SetItemAsync<ArtistWorkInfo>(localStorageKey, result);
             }
             return result;
