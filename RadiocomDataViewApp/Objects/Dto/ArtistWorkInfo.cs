@@ -10,7 +10,7 @@ namespace RadiocomDataViewApp.Objects.Dto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public IHasName ArtistInfo { get; set ; }
+        public ArtistInfo ArtistInfo { get; set ; }
 
     }
 }
