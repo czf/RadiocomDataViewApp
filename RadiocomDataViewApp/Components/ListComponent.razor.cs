@@ -27,7 +27,7 @@ namespace RadiocomDataViewApp.Components
 
             List<RenderFragment> containerChildContents = new List<RenderFragment>();
             int line = 0;
-            foreach(var group in Items.GroupBy(x => x.Name.ToUpperInvariant().First()))
+            foreach(var group in Items.GroupBy(x => x.Name.ToUpperInvariant().FirstOrDefault()))
             {
                 builder.OpenComponent<Container>(line++);
                 builder.AddAttribute(line++, "class", "mb-4 bg-dark");
@@ -60,7 +60,7 @@ namespace RadiocomDataViewApp.Components
             {
                 builder2.OpenComponent<Heading>(input.line);
                 builder2.AddAttribute(input.line++, "Size", HeadingSize.Is3);
-                builder2.AddAttribute(input.line++, "ChildContent", (RenderFragment)((builder3) => builder3.AddContent(0, input.InputItems?.First().Name?.ToUpperInvariant()?.First())));
+                builder2.AddAttribute(input.line++, "ChildContent", (RenderFragment)((builder3) => builder3.AddContent(0, input.InputItems?.First().Name?.ToUpperInvariant()?.FirstOrDefault())));
                 builder2.Class("border-bottom", input.line++);
                 builder2.CloseComponent();
                 foreach (var item in input.InputItems)
@@ -68,7 +68,14 @@ namespace RadiocomDataViewApp.Components
                     builder2.OpenElement(input.line++, "a");
                     builder2.Href($"{ListItemHrefGenerator(item)}", input.line++);
                     builder2.Class("d-block", input.line++);
-                    builder2.AddContent(input.line++, item.Name);
+
+                    string name = item.Name;
+                    if (String.IsNullOrEmpty(item.Name))
+                    {
+                        name = "<no name listed>";
+                    }
+
+                    builder2.AddContent(input.line++, name);
                     builder2.CloseElement();
                 }
 
