@@ -3,7 +3,7 @@
 @if (!_hasVisited)
 {
 	<Modal @ref="Welcome" Closed="@ClosedModal">
-		<ModalBackdrop />
+		<ModalBackdrop Style="z-index:-1;" />
 		<ModalContent Centered="true">
 			<ModalBody>
 				<CloseButton Clicked="@CloseClick"></CloseButton>

@@ -17,12 +17,16 @@ using RadiocomDataViewApp.Components.IndexCharts;
 using RadiocomDataViewApp.Clients.Mocks;
 using Blazored.LocalStorage;
 using RadiocomDataViewApp.Services;
+using RadiocomDataViewApp.Clients.Live;
 
 namespace RadiocomDataViewApp
 {
     public class Program
     {
         private const string CONFIGKEY_WELCOME_DATE = "welcome";
+        private const string CONFIGKEY_USE_MOCKS = "useMocks";
+        private const string CONFIGKEY_ENDPOINT_ADDRESS = "endpointAddress";
+
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -38,7 +42,7 @@ namespace RadiocomDataViewApp
             
             builder.Services.AddSingleton(sp => new EnvironmentService { IsDevelopment = builder.HostEnvironment.IsDevelopment() });
             builder.Services.AddSingleton<IRadiocomDataAggregateDataClient, MockRadiocomDataAggregateDataClient>();
-            builder.Services.AddSingleton<IRadiocomArtistRepository, MockRadiocomArtistRepository>();
+            
             builder.Services.AddSingleton<IRadiocomArtistWorkRepository, MockRadiocomArtistWorkRepository>();
             builder.Services.AddScoped<IVisitService, VisitService>(x=> {
                 DateTime welcomeDate =  builder.Configuration.GetValue<DateTime>(CONFIGKEY_WELCOME_DATE);
@@ -52,6 +56,22 @@ namespace RadiocomDataViewApp
 
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddScoped<IRadiocomArtistRepository>(x=>
+            {
+                IRadiocomArtistRepository service;
+                bool useMocksFlag = builder.Configuration.GetValue<bool>(CONFIGKEY_USE_MOCKS);
+                if (useMocksFlag)
+                {
+                    service = new MockRadiocomArtistRepository();
+                }
+                else
+                {
+                    string endpointAddress = builder.Configuration.GetValue<string>(CONFIGKEY_ENDPOINT_ADDRESS);
+                    service = new LiveRadiocomArtistRepository(x.GetService<HttpClient>(), x.GetService<ILocalStorageService>(), endpointAddress);
+                }
+                return service;
+            });
+
             builder.Services.AddBlazoredLocalStorage();
             
             string value =string.Empty;
