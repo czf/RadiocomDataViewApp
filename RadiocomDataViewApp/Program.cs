@@ -43,7 +43,7 @@ namespace RadiocomDataViewApp
             builder.Services.AddSingleton(sp => new EnvironmentService { IsDevelopment = builder.HostEnvironment.IsDevelopment() });
             builder.Services.AddSingleton<IRadiocomDataAggregateDataClient, MockRadiocomDataAggregateDataClient>();
             
-            builder.Services.AddSingleton<IRadiocomArtistWorkRepository, MockRadiocomArtistWorkRepository>();
+            
             builder.Services.AddScoped<IVisitService, VisitService>(x=> {
                 DateTime welcomeDate =  builder.Configuration.GetValue<DateTime>(CONFIGKEY_WELCOME_DATE);
                 return new VisitService(x.GetService<ILocalStorageService>(), welcomeDate);            
@@ -68,6 +68,22 @@ namespace RadiocomDataViewApp
                 {
                     string endpointAddress = builder.Configuration.GetValue<string>(CONFIGKEY_ENDPOINT_ADDRESS);
                     service = new LiveRadiocomArtistRepository(x.GetService<HttpClient>(), x.GetService<ILocalStorageService>(), endpointAddress);
+                }
+                return service;
+            });
+
+            builder.Services.AddScoped<IRadiocomArtistWorkRepository>(x =>
+            {
+                IRadiocomArtistWorkRepository service;
+                bool useMocksFlag = builder.Configuration.GetValue<bool>(CONFIGKEY_USE_MOCKS);
+                if (useMocksFlag)
+                {
+                    service = new MockRadiocomArtistWorkRepository(x.GetService<IRadiocomArtistRepository>());
+                }
+                else
+                {
+                    string endpointAddress = builder.Configuration.GetValue<string>(CONFIGKEY_ENDPOINT_ADDRESS);
+                    service = new LiveRadiocomArtistWorkRepository(x.GetService<IRadiocomArtistRepository>(), x.GetService<HttpClient>(), x.GetService<ILocalStorageService>(), endpointAddress);
                 }
                 return service;
             });
