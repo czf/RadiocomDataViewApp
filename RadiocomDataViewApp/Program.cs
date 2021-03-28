@@ -41,8 +41,6 @@ namespace RadiocomDataViewApp
             builder.RootComponents.Add<App>("app");
             
             builder.Services.AddSingleton(sp => new EnvironmentService { IsDevelopment = builder.HostEnvironment.IsDevelopment() });
-            builder.Services.AddSingleton<IRadiocomDataAggregateDataClient, MockRadiocomDataAggregateDataClient>();
-            
             
             builder.Services.AddScoped<IVisitService, VisitService>(x=> {
                 DateTime welcomeDate =  builder.Configuration.GetValue<DateTime>(CONFIGKEY_WELCOME_DATE);
@@ -87,6 +85,24 @@ namespace RadiocomDataViewApp
                 }
                 return service;
             });
+
+
+            builder.Services.AddScoped<IRadiocomDataAggregateDataClient>(x=>
+            {
+                IRadiocomDataAggregateDataClient service;
+                bool useMocksFlag = builder.Configuration.GetValue<bool>(CONFIGKEY_USE_MOCKS);
+                if (useMocksFlag)
+                {
+                    service = new MockRadiocomDataAggregateDataClient();
+                }
+                else
+                {
+                    string endpointAddress = builder.Configuration.GetValue<string>(CONFIGKEY_ENDPOINT_ADDRESS);
+                    service = new LiveRadiocomDataAggregateDataClient(x.GetService<HttpClient>(), x.GetService<ILocalStorageService>(), endpointAddress);
+                }
+                return service;
+            });
+
 
             builder.Services.AddBlazoredLocalStorage();
             

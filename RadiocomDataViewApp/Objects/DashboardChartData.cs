@@ -8,7 +8,7 @@ namespace RadiocomDataViewApp.Objects
     public class DashboardChartData
     {
         public string Label { get; set; }
-        public int Value { get; set; }
+        public long Value { get; set; }
         public int DataId { get; set; }
     }
 }

@@ -8,12 +8,12 @@ namespace RadiocomDataViewApp.Objects
     public class BarChartDatasetXValue
     {
         public int DataId { get; set; }
-        public int X { get; set; }
+        public long X { get; set; }
     }
 
     public class DashboardChartDatasetYValue
     {
         public int DataId { get; set; }
-        public int Y { get; set; }
+        public long Y { get; set; }
     }
 }

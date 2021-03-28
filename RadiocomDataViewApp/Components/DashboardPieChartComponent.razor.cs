@@ -13,7 +13,7 @@ namespace RadiocomDataViewApp.Components
     {
         private const string DEFAULT_SLICE_COLOR = "#FFF";
 
-        private PieChart<int> Chart;
+        private PieChart<long> Chart;
         public  object ChartOptionsObj;
 
 
@@ -65,7 +65,7 @@ namespace RadiocomDataViewApp.Components
                 }
             }
 
-            PieChartDataset<int> newChartDataset = new PieChartDataset<int>()
+            PieChartDataset<long> newChartDataset = new PieChartDataset<long>()
             {
                 Data = newDatas.Select(x => x.Value).ToList(),
                 BackgroundColor = colors,
@@ -95,6 +95,6 @@ namespace RadiocomDataViewApp.Components
             await OnDashboardPieChartClick.InvokeAsync(chartMouseEventArgs);
         }
 
-        protected PieChartDataset<int> CurrentDataset { get; set; }
+        protected PieChartDataset<long> CurrentDataset { get; set; }
     }
 }
