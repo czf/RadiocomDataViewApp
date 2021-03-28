@@ -10,6 +10,6 @@ namespace RadiocomDataViewApp.Clients
         None,
         SevenDays, 
         ThreeMonths,
-        AllTime
+        OneYear
     }
 }

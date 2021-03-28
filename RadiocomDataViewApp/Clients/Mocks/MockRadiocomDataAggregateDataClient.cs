@@ -39,7 +39,7 @@ namespace RadiocomDataViewApp.Clients
                 case AggregateTimeRange.ThreeMonths:
                     multiplier = 20;
                     break;
-                case AggregateTimeRange.AllTime:
+                case AggregateTimeRange.OneYear:
                     multiplier = 50;
                     break;
                 default:
@@ -97,7 +97,7 @@ namespace RadiocomDataViewApp.Clients
                 new ItemCount(){Count = 1 * multiplier, Name= GetOverTimeName(5, timeRange), ItemId = artistWorkId},
                 new ItemCount(){Count = 0 * multiplier, Name= GetOverTimeName(6, timeRange), ItemId = artistWorkId},
             };
-            if(timeRange == AggregateTimeRange.ThreeMonths || timeRange == AggregateTimeRange.AllTime)
+            if(timeRange == AggregateTimeRange.ThreeMonths || timeRange == AggregateTimeRange.OneYear)
             {
                 result.Add(new ItemCount() { Count = 10 * multiplier, Name = GetOverTimeName(7, timeRange), ItemId = artistWorkId });
                 result.Add(new ItemCount() { Count = 2 * multiplier, Name = GetOverTimeName(8, timeRange), ItemId = artistWorkId } );
@@ -134,7 +134,7 @@ namespace RadiocomDataViewApp.Clients
                 case AggregateTimeRange.ThreeMonths:
                     result = DateTime.Now.AddDays(index * -7).ToShortDateString();
                     break;
-                case AggregateTimeRange.AllTime:
+                case AggregateTimeRange.OneYear:
                     result = DateTime.Now.AddMonths(index * -1).ToShortDateString();
                     break;
                 default:
@@ -158,7 +158,7 @@ namespace RadiocomDataViewApp.Clients
                 new ItemCount(){Count = 1 * multiplier, Name= GetOverTimeName(5, timeRange), ItemId = artistId},
                 new ItemCount(){Count = 0 * multiplier, Name= GetOverTimeName(6, timeRange), ItemId = artistId},
             };
-            if (timeRange == AggregateTimeRange.ThreeMonths || timeRange == AggregateTimeRange.AllTime)
+            if (timeRange == AggregateTimeRange.ThreeMonths || timeRange == AggregateTimeRange.OneYear)
             {
                 result.Add(new ItemCount() { Count = 10 * multiplier, Name = GetOverTimeName(7, timeRange), ItemId = artistId });
                 result.Add(new ItemCount() { Count = 2 * multiplier, Name = GetOverTimeName(8, timeRange), ItemId = artistId });
