@@ -16,31 +16,28 @@ namespace RadiocomDataViewApp.Components.Sitewide
 
         private Modal Welcome;
 
-        private bool _hasVisited;
+        private bool? _hasVisited;
 
 
         private Task ClosedModal()
         {
-            Task visted = VisitService.SetVisitedAsync();            
+            Task visted = VisitService.SetVisitedAsync();
             return visted;
         }
 
 
         private void CloseClick() 
         {
-
-
             Welcome.Hide();
+            _hasVisited = null;
             StateHasChanged();
-
         }
 
         protected override async Task OnParametersSetAsync()
         {
-
             await base.OnParametersSetAsync();
-            _hasVisited = await VisitService.HasVisitedAsync();
             VisitService.OnVisitStateChange += UpdateVisitedState;
+            _hasVisited = await VisitService.HasVisitedAsync();
         }
 
         async Task UpdateVisitedState()
@@ -52,11 +49,15 @@ namespace RadiocomDataViewApp.Components.Sitewide
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
-            if (!_hasVisited)
+
+            if (_hasVisited.HasValue && !_hasVisited.Value)
             {
                 Welcome.Show();
             }
-            
+            else
+            {
+                Welcome.Hide();
+            }
         }
 
 

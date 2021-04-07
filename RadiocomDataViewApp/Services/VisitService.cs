@@ -24,7 +24,7 @@ namespace RadiocomDataViewApp.Services
 
         public async Task<bool> HasVisitedAsync() 
         {
-            return await _localStorageService.GetItemAsync<DateTime>(VISITED_KEY) > _welcomeDate; 
+            return await _localStorageService.GetItemAsync<DateTime>(VISITED_KEY) > _welcomeDate;
         }
         public async Task SetVisitedAsync()
         {

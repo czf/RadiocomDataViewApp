@@ -52,11 +52,10 @@ namespace RadiocomDataViewApp.Components
         {
             
             DashboardChartMouseEventArgs chartMouseEventArgs = new DashboardChartMouseEventArgs(args.DatasetIndex, args.Index, args.Model);
-            chartMouseEventArgs.DatasetElement = CurrentDataset.Data[args.Index]; 
+            chartMouseEventArgs.DatasetElement = CurrentDataset.Data[args.Index];
             await OnDashboardChartElementClick.InvokeAsync(chartMouseEventArgs);
         }
-
-        
+               
 
         public async Task RefreshChartData()
         {
@@ -80,15 +79,15 @@ namespace RadiocomDataViewApp.Components
 
             BarChartDataset<BarChartDatasetXValue> newBarChartDataset = new BarChartDataset<BarChartDatasetXValue>()
             {
+                Type = "horizontalBar",
                 Data = newDatas.Select(x => new BarChartDatasetXValue() { X = x.Value, DataId = x.DataId }).ToList(),
                 BackgroundColor = colors,
-                BorderColor = colors
+                BorderColor = colors,
+
             };
-            newBarChartDataset.HoverBackgroundColor.Clear();
-            newBarChartDataset.HoverBorderColor.Clear();
+                        
             CurrentDataset = newBarChartDataset;
-            await Chart.AddDataSet(newBarChartDataset);
-            await Chart.Update();
+            await Chart.AddDatasetsAndUpdate(newBarChartDataset);
         }
 
         private HorizontalBarChart<BarChartDatasetXValue> Chart;
