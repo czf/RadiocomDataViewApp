@@ -71,11 +71,8 @@ namespace RadiocomDataViewApp.Components
                 BackgroundColor = colors,
                 BorderColor = colors
             };
-            newChartDataset.HoverBackgroundColor.Clear();
-            newChartDataset.HoverBorderColor.Clear();
             CurrentDataset = newChartDataset;
-            await Chart.AddDataSet(newChartDataset);
-            await Chart.Update();
+            await Chart.AddDatasetsAndUpdate(newChartDataset);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

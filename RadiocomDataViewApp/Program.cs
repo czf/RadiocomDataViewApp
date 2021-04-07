@@ -106,17 +106,12 @@ namespace RadiocomDataViewApp
 
             builder.Services.AddBlazoredLocalStorage();
             
-            string value =string.Empty;
             Console.WriteLine($"WelcomeDate: {builder.Configuration.GetValue<DateTime>(CONFIGKEY_WELCOME_DATE)}");
-            var host = builder.Build();
-            host.Services
-                .UseBootstrapProviders()
-                .UseFontAwesomeIcons();
-                
-            await host.RunAsync();
+            await builder.Build().RunAsync();
+
         }
 
-      
+
     }
     public class EnvironmentService
     {
