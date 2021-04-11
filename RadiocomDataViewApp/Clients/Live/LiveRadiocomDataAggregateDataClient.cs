@@ -31,8 +31,9 @@ namespace RadiocomDataViewApp.Clients.Live
         public async Task<List<ItemCount>> GetArtistPlayedOverTime(AggregateTimeRange timeRange, int artistId)
         {
             string localStorageKey = LOCALSTORAGEKEY_ARTISTPLAYEDOVERTIME + artistId + "-" + timeRange;
-            List<ItemCount> result = await _localStorageService.GetItemAsync<List<ItemCount>>(localStorageKey);
-            if (result == null)
+            List<ItemCount> result;
+            TimeCachedObject<List<ItemCount>> cachedObject = await _localStorageService.GetItemAsync<TimeCachedObject<List<ItemCount>>>(localStorageKey);
+            if (cachedObject == null || cachedObject.NextUpdateHour < DateTimeOffset.UtcNow)
             {
 
                 ArtistAggregatedEventsRequest request = new ArtistAggregatedEventsRequest() { ArtistIds = new List<int>() { artistId }, TimeSeries = timeRange };
@@ -49,7 +50,17 @@ namespace RadiocomDataViewApp.Clients.Live
                     }
                 }
                 result = buckets.Values.OrderBy(x => x.sortOrder).Select(x => x.itemCount).ToList();
-                await _localStorageService.SetItemAsync(localStorageKey, result);
+                DateTimeOffset nextUpdate = TimeCachedObject<object>.CalculateNextUpdateHour();
+                cachedObject = new TimeCachedObject<List<ItemCount>>()
+                {
+                    CachedObject = result,
+                    NextUpdateHour = nextUpdate
+                };
+                await _localStorageService.SetItemAsync(localStorageKey, cachedObject);
+            }
+            else
+            {
+                result = cachedObject.CachedObject;
             }
             return result;
         }
@@ -81,9 +92,11 @@ namespace RadiocomDataViewApp.Clients.Live
         public async Task<List<ItemCount>> GetSongPlayedOverTime(AggregateTimeRange timeRange, int artistWorkId)
         {
             string localStorageKey = LOCALSTORAGEKEY_ARTISTWORKPLAYEDOVERTIME + artistWorkId + "-" + timeRange;
-            List<ItemCount> result = await _localStorageService.GetItemAsync<List<ItemCount>>(localStorageKey);
+            List<ItemCount> result;
+            TimeCachedObject<List<ItemCount>> cachedObject = await _localStorageService.GetItemAsync<TimeCachedObject<List<ItemCount>>>(localStorageKey);
 
-            if (result == null)
+
+            if (cachedObject == null || cachedObject.NextUpdateHour < DateTimeOffset.UtcNow)
             {
                 ArtistWorkAggregatedEventsRequest request = new ArtistWorkAggregatedEventsRequest() { ArtistWorkIds = new List<int>() { artistWorkId }, TimeSeries = timeRange };
                 HttpResponseMessage responseMessage = await _httpClient.PostAsJsonAsync(_endpointAddress + "ArtistWorkAggregatedEvents", request);
@@ -99,13 +112,27 @@ namespace RadiocomDataViewApp.Clients.Live
                     }
                 }
                 result = buckets.Values.OrderBy(x => x.sortOrder).Select(x => x.itemCount).ToList();
-                await _localStorageService.SetItemAsync(localStorageKey, result);
+                DateTimeOffset nextUpdate = TimeCachedObject<object>.CalculateNextUpdateHour();
+                cachedObject = new TimeCachedObject<List<ItemCount>>()
+                {
+                    CachedObject = result,
+                    NextUpdateHour = nextUpdate
+                };
+                await _localStorageService.SetItemAsync(localStorageKey, cachedObject);
 
+            }
+            else
+            {
+                result = cachedObject.CachedObject;
             }
             return result;
         }
 
         public int GetTotalUniqueSongs(AggregateTimeRange timeRange)
+        {
+            return 0;
+        }
+        public int GetTotalUniqueArtists(AggregateTimeRange timeRange)
         {
             return 0;
         }
