@@ -83,7 +83,7 @@ namespace RadiocomDataViewApp.Clients
             
         }
 
-        public List<ItemCount> GetSongPlayedOverTime(AggregateTimeRange timeRange, int artistWorkId)
+        public Task<List<ItemCount>> GetSongPlayedOverTime(AggregateTimeRange timeRange, int artistWorkId)
         {
             int multiplier = GetTimeRangeMultipler(timeRange);
 
@@ -106,7 +106,7 @@ namespace RadiocomDataViewApp.Clients
                 result.Add(new ItemCount() { Count = 2 * multiplier, Name = GetOverTimeName(11, timeRange), ItemId = artistWorkId });
             }
             result.Reverse();
-            return result;
+            return Task.FromResult(result);
             
         }
 
