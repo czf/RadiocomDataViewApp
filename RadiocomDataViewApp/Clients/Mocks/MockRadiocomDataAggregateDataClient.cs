@@ -63,19 +63,20 @@ namespace RadiocomDataViewApp.Clients
             };
         }
 
-        public int GetTotalUniqueSongs(AggregateTimeRange timeRange)
+        public async Task<int> GetTotalUniqueSongsAsync(AggregateTimeRange timeRange)
         {
             int multiplier = GetTimeRangeMultipler(timeRange);
 
-            return multiplier * _random.Next(300, 350);
+            return await Task.FromResult(multiplier * _random.Next(300, 350));
         }
 
-        public int GetTotalUniqueArtists(AggregateTimeRange timeRange)
+        public async Task<int> GetTotalUniqueArtistsAsync(AggregateTimeRange timeRange)
         {
             int multiplier = GetTimeRangeMultipler(timeRange);
 
-            return multiplier * _random.Next(300, 350);
+            return await Task.FromResult(multiplier * _random.Next(300, 350));
         }
+        
 
         public List<ItemCount> GetMostPlayedSongs(AggregateTimeRange timeRange, int artistId)
         {
@@ -183,5 +184,7 @@ namespace RadiocomDataViewApp.Clients
                 new ItemCount(){Count=51*multiplier, Name="something song", ItemId = 513}
             });
         }
+
+        
     }
 }

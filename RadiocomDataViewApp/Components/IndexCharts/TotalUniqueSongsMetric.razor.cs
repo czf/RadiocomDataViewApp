@@ -27,17 +27,17 @@ namespace RadiocomDataViewApp.Components.IndexCharts
             };
             AggregateTimeRange = AggregateTimeRange.SevenDays;
         }
-        private void UpdateChartDataTimeRange(AggregateTimeRange aggregateTimeRange)
+        private async Task UpdateChartDataTimeRange(AggregateTimeRange aggregateTimeRange)
         {
             AggregateTimeRange = aggregateTimeRange;
-            Chart.RefreshChartData();
+            await Chart.RefreshChartData();
 
 
         }
 
-        private int TotalUniqueSongs()
+        private async Task<int> TotalUniqueSongs()
         {
-            return RadiocomDataAggregateDataClient.GetTotalUniqueSongs(AggregateTimeRange);
+            return await RadiocomDataAggregateDataClient.GetTotalUniqueSongsAsync(AggregateTimeRange);
         }
 
     }
