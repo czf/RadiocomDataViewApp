@@ -29,15 +29,15 @@ namespace RadiocomDataViewApp.Components.IndexCharts
             AggregateTimeRange = AggregateTimeRange.SevenDays;
         }
 
-        private void UpdateChartDataTimeRange(AggregateTimeRange aggregateTimeRange)
+        private async Task UpdateChartDataTimeRange(AggregateTimeRange aggregateTimeRange)
         {
             AggregateTimeRange = aggregateTimeRange;
-            Chart.RefreshChartData();
+            await Chart.RefreshChartData();
         }
 
-        private int TotalUniqueArtists()
+        private async Task<int> TotalUniqueArtists()
         {
-            return RadiocomDataAggregateDataClient.GetTotalUniqueArtists(AggregateTimeRange);
+            return await RadiocomDataAggregateDataClient.GetTotalUniqueArtistsAsync(AggregateTimeRange);
         }
     }
 }

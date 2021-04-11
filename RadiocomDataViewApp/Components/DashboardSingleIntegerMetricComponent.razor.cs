@@ -32,17 +32,17 @@ namespace RadiocomDataViewApp.Components
         [Parameter]
         public string ChartTitle { get; set; }
         [Parameter]
-        public Func<int> GenerateSingleDataMetric { get; set; }
+        public Func<Task<int>> GenerateSingleDataMetric { get; set; }
 
-        public void RefreshChartData()
+        public async Task RefreshChartData()
         {
-            _integerMetricValue = (GenerateSingleDataMetric).Invoke();
+            _integerMetricValue = await (GenerateSingleDataMetric).Invoke();
         }
 
-        protected override void OnParametersSet()
+        protected override async Task OnParametersSetAsync()
         {
-            base.OnParametersSet();
-            RefreshChartData();
+            await base.OnParametersSetAsync();
+            await RefreshChartData();
         }
         //protected override void OnAfterRender(bool firstRender)
         //{
