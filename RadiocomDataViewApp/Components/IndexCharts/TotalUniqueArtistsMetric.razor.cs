@@ -37,7 +37,7 @@ namespace RadiocomDataViewApp.Components.IndexCharts
 
         private int TotalUniqueArtists()
         {
-            return RadiocomDataAggregateDataClient.GetTotalUniqueSongs(AggregateTimeRange);
+            return RadiocomDataAggregateDataClient.GetTotalUniqueArtists(AggregateTimeRange);
         }
     }
 }
