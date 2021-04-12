@@ -9,7 +9,7 @@ namespace RadiocomDataViewApp.Interfaces
 {
     public interface IRadiocomDataAggregateDataClient
     {
-        List<ItemCount> GetMostPlayedSongs(AggregateTimeRange timeRange);
+        Task<List<ItemCount>> GetMostPlayedSongsAsync(AggregateTimeRange timeRange);
         
         /// <summary>
         /// Get the ArtistWorks for within the specfied timerange for the specified artist
@@ -17,9 +17,9 @@ namespace RadiocomDataViewApp.Interfaces
         /// <param name="timeRange">Time range to query</param>
         /// <param name="artistId">Artist id to query forr</param>
         /// <returns></returns>
-        List<ItemCount> GetMostPlayedSongs(AggregateTimeRange timeRange, int artistId);
+        Task<List<ItemCount>> GetMostPlayedSongsAsync(AggregateTimeRange timeRange, int artistId);
 
-        List<ItemCount> GetMostPlayedArtists(AggregateTimeRange timeRange);
+        Task<List<ItemCount>> GetMostPlayedArtistsAsync(AggregateTimeRange timeRange);
 
         Task<int> GetTotalUniqueSongsAsync(AggregateTimeRange timeRange);
         Task<int> GetTotalUniqueArtistsAsync(AggregateTimeRange timeRange);

@@ -98,7 +98,12 @@ namespace RadiocomDataViewApp
                 else
                 {
                     string endpointAddress = builder.Configuration.GetValue<string>(CONFIGKEY_ENDPOINT_ADDRESS);
-                    service = new LiveRadiocomDataAggregateDataClient(x.GetService<HttpClient>(), x.GetService<ILocalStorageService>(), endpointAddress);
+                    service = new LiveRadiocomDataAggregateDataClient(
+                        x.GetService<HttpClient>(), 
+                        x.GetService<ILocalStorageService>(), 
+                        endpointAddress,
+                        x.GetService<IRadiocomArtistRepository>(),
+                        x.GetService<IRadiocomArtistWorkRepository>());
                 }
                 return service;
             });

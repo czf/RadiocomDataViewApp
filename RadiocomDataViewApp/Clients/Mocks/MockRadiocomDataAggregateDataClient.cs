@@ -12,10 +12,10 @@ namespace RadiocomDataViewApp.Clients
     {
         private static Random _random = new Random();
 
-        public List<ItemCount> GetMostPlayedSongs(AggregateTimeRange timeRange)
+        public Task<List<ItemCount>> GetMostPlayedSongsAsync(AggregateTimeRange timeRange)
         {
             int multiplier = GetTimeRangeMultipler(timeRange);
-            return new List<ItemCount>()
+            return Task.FromResult(new List<ItemCount>()
             {
                 new ItemCount(){Count=100*multiplier,Name="song name", ItemId = 77},
                 new ItemCount(){Count=100*multiplier,Name="song", ItemId = 53},
@@ -23,7 +23,7 @@ namespace RadiocomDataViewApp.Clients
                 new ItemCount(){Count=51*multiplier, Name="song 1111", ItemId = 9},
                 new ItemCount(){Count=51*multiplier, Name="song something", ItemId = 204},
                 new ItemCount(){Count=51*multiplier, Name="something song", ItemId = 513}
-            };
+            });
         }
 
         private static int GetTimeRangeMultipler(AggregateTimeRange timeRange)
@@ -49,10 +49,10 @@ namespace RadiocomDataViewApp.Clients
             return multiplier;
         }
 
-        public List<ItemCount> GetMostPlayedArtists(AggregateTimeRange timeRange)
+        public Task<List<ItemCount>> GetMostPlayedArtistsAsync(AggregateTimeRange timeRange)
         {   
             int multiplier = GetTimeRangeMultipler(timeRange);
-            return new List<ItemCount>()
+            return Task.FromResult(new List<ItemCount>()
             {
                 new ItemCount(){Count=100*multiplier,Name="artist name", ItemId = 77},
                 new ItemCount(){Count=100*multiplier,Name="artist", ItemId = 53},
@@ -60,7 +60,7 @@ namespace RadiocomDataViewApp.Clients
                 new ItemCount(){Count=51*multiplier, Name="artist 1111", ItemId = 9},
                 new ItemCount(){Count=51*multiplier, Name="artist something", ItemId = 204},
                 new ItemCount(){Count=51*multiplier, Name="something artist", ItemId = 513}
-            };
+            });
         }
 
         public async Task<int> GetTotalUniqueSongsAsync(AggregateTimeRange timeRange)
@@ -78,10 +78,9 @@ namespace RadiocomDataViewApp.Clients
         }
         
 
-        public List<ItemCount> GetMostPlayedSongs(AggregateTimeRange timeRange, int artistId)
+        public Task<List<ItemCount>> GetMostPlayedSongsAsync(AggregateTimeRange timeRange, int artistId)
         {
-            return GetMostPlayedSongs(timeRange);
-            
+            return Task.FromResult(new List<ItemCount>());
         }
 
         public Task<List<ItemCount>> GetSongPlayedOverTime(AggregateTimeRange timeRange, int artistWorkId)

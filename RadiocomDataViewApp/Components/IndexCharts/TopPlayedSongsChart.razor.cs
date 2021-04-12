@@ -41,9 +41,9 @@ namespace RadiocomDataViewApp.Components.IndexCharts
         
 
         
-        private IEnumerable<DashboardChartData> TopPlayedSongs()
+        private async Task<IEnumerable<DashboardChartData>> TopPlayedSongs()
         {
-            List<ItemCount> radioComData = RadiocomDataAggregateDataClient.GetMostPlayedSongs(ChartDataTimeRange);
+            List<ItemCount> radioComData = await RadiocomDataAggregateDataClient.GetMostPlayedSongsAsync(ChartDataTimeRange);
             return radioComData.Select(x => new DashboardChartData() { Label = x.Name, Value = x.Count, DataId = x.ItemId });
         }
         
