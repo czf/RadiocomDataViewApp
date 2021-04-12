@@ -146,21 +146,24 @@ namespace RadiocomDataViewApp.Components
 
         protected override bool ShouldRender()
         {
-            
             return Chart.Data != null && (Chart.Data.Datasets?.Any(x => x.Data?.Any() ?? false) ?? false) && base.ShouldRender();
         }
         private string GetScaleFontColor()
         => string.IsNullOrWhiteSpace(ScaleLabelFontColor) ?  "#fff" : ScaleLabelFontColor;
         protected BarChartDataset<BarChartDatasetXValue> CurrentDataset { get; set; }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override Task OnAfterRenderAsync(bool firstRender)
         {
-            await base.OnAfterRenderAsync(firstRender);
-            if (firstRender)
-            {
-                await RefreshChartData();
-            }
+            return base.OnAfterRenderAsync(firstRender).ContinueWith(x =>
+           InvokeAsync(async () => {
+                if (firstRender)
+                {
+                    await RefreshChartData();
+                }
+            })).Unwrap();
         }
+        
+        
     }
     
 }
