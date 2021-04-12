@@ -51,9 +51,9 @@ namespace RadiocomDataViewApp.Components.ArtistCharts
             await Chart.RefreshChartData();
         }
 
-        private IEnumerable<DashboardChartData> TopPlayedArtistSongs()
+        private async Task<IEnumerable<DashboardChartData>> TopPlayedArtistSongs()
         {
-            List<ItemCount> radioComData = RadiocomDataAggregateDataClient.GetMostPlayedSongs(ChartDataTimeRange, ArtistId);
+            List<ItemCount> radioComData = await RadiocomDataAggregateDataClient.GetMostPlayedSongsAsync(ChartDataTimeRange, ArtistId);
             return radioComData.Select(x => new DashboardChartData() { Label = x.Name, Value = x.Count, DataId = x.ItemId });
         }
     }

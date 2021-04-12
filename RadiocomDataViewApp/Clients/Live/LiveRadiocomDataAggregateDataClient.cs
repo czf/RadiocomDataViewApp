@@ -18,16 +18,21 @@ namespace RadiocomDataViewApp.Clients.Live
         private const string LOCALSTORAGEKEY_ARTISTWORKPLAYEDOVERTIME = "artistworkplayedovertime-";
         private const string LOCALSTORAGEKEY_ARTISTWORKUNIQUECOUNT = "artistworkuniquecount-";
         private const string LOCALSTORAGEKEY_ALLARTISTWORKAGGREGATEDEVENTS= "allartistworkaggregatedevents-";
+        private const string LOCALSTORAGEKEY_MOSTPLAYEDARTISTWORKS = "mostplayedartistworks-";
 
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorageService;
         private readonly string _endpointAddress;
+        private readonly IRadiocomArtistRepository _radiocomArtistRepository;
+        private readonly IRadiocomArtistWorkRepository _radiocomArtistWorkRepository;
 
-        public LiveRadiocomDataAggregateDataClient(HttpClient httpClient, ILocalStorageService localStorageService, string endpointAddress)
+        public LiveRadiocomDataAggregateDataClient(HttpClient httpClient, ILocalStorageService localStorageService, string endpointAddress, IRadiocomArtistRepository radiocomArtistRepository, IRadiocomArtistWorkRepository radiocomArtistWorkRepository)
         {
             _httpClient = httpClient;
             _localStorageService = localStorageService;
             _endpointAddress = endpointAddress;
+            _radiocomArtistRepository = radiocomArtistRepository;
+            _radiocomArtistWorkRepository = radiocomArtistWorkRepository;
         }
 
         public async Task<List<ItemCount>> GetArtistPlayedOverTime(AggregateTimeRange timeRange, int artistId)
@@ -71,19 +76,54 @@ namespace RadiocomDataViewApp.Clients.Live
             return Task.FromResult(new List<ItemCount>());
         }
 
-        public List<ItemCount> GetMostPlayedArtists(AggregateTimeRange timeRange)
+        public async Task<List<ItemCount>> GetMostPlayedArtistsAsync(AggregateTimeRange timeRange)
         {
-            return new List<ItemCount>();
+            return await Task.FromResult(new List<ItemCount>());
         }
 
-        public List<ItemCount> GetMostPlayedSongs(AggregateTimeRange timeRange)
+        public async Task<List<ItemCount>> GetMostPlayedSongsAsync(AggregateTimeRange timeRange)
         {
-            return new List<ItemCount>();
+            List<ItemCount> result = new List<ItemCount>();
+            string localStorageKey = LOCALSTORAGEKEY_MOSTPLAYEDARTISTWORKS + timeRange;
+            TimeCachedObject<List<ItemCount>> cachedObject = await _localStorageService.GetItemAsync<TimeCachedObject<List<ItemCount>>>(localStorageKey);
+            if (cachedObject == null || cachedObject.NextUpdateHour < DateTimeOffset.UtcNow)
+            {
+
+                List<AggregatedEvent> artistWorks = await GetAllArtistWorkAggregatedEvents(timeRange);
+                foreach (var work in artistWorks
+                                        .OrderByDescending(x => x.AggregatedEventSum)
+                                        .Take(6))
+                {
+                    result.Add(new ItemCount()
+                    {
+                        Count = work.AggregatedEventSum,
+                        ItemId = work.Id,
+                        Name = (await _radiocomArtistWorkRepository.GetArtistWorkAsync(work.Id)).Name
+                    });
+
+                    result = result.OrderByDescending(x => x.Count).ThenBy(x => x.Name).ToList();
+
+                    DateTimeOffset nextUpdate = TimeCachedObject<object>.CalculateNextUpdateHour();
+                    cachedObject = new TimeCachedObject<List<ItemCount>>()
+                    {
+                        CachedObject = result,
+                        NextUpdateHour = nextUpdate
+                    };
+                    await _localStorageService.SetItemAsync(localStorageKey, cachedObject);
+                }
+            }
+            else
+            {
+                result = cachedObject.CachedObject;
+            }
+            return result;
+                
+                
         }
 
-        public List<ItemCount> GetMostPlayedSongs(AggregateTimeRange timeRange, int artistId)
+        public async Task<List<ItemCount>> GetMostPlayedSongsAsync(AggregateTimeRange timeRange, int artistId)
         {
-            return new List<ItemCount>();
+            return await Task.FromResult(new List<ItemCount>());
         }
 
         public Task<List<ItemCount>> GetSongPlayedAndOtherPlayed(AggregateTimeRange timeRange, int artistWorkId)

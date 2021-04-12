@@ -31,9 +31,9 @@ namespace RadiocomDataViewApp.Components.IndexCharts
         private List<HeaderButtonState> HeaderButtonConfigs;
         private AggregateTimeRange ChartDataTimeRange;
         private DashboardHorizontalBarChartComponent Chart;
-        private IEnumerable<DashboardChartData> TopPlayedArtists()
+        private async Task<IEnumerable<DashboardChartData>> TopPlayedArtists()
         {
-            List<ItemCount> radioComData = RadiocomDataAggregateDataClient.GetMostPlayedArtists(ChartDataTimeRange);
+            List<ItemCount> radioComData = await RadiocomDataAggregateDataClient.GetMostPlayedArtistsAsync(ChartDataTimeRange);
             return radioComData.Select(x => new DashboardChartData() { Label = x.Name, Value = x.Count, DataId = x.ItemId });
         }
 

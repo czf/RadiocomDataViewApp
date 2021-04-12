@@ -35,7 +35,7 @@ namespace RadiocomDataViewApp.Components
         [Parameter]
         public string ChartTitle { get; set; }
         [Parameter]
-        public Func<IEnumerable<DashboardChartData>> GenerateChartDatas { get; set; }
+        public Func<Task<IEnumerable<DashboardChartData>>> GenerateChartDatas { get; set; }
         [Parameter]
         public Func<int, ChartColor> BarColorGenerator { get; set; }
         [Parameter]
@@ -59,7 +59,7 @@ namespace RadiocomDataViewApp.Components
 
         public async Task RefreshChartData()
         {
-            IEnumerable<DashboardChartData> newDatas = GenerateChartDatas?.Invoke();
+            IEnumerable<DashboardChartData> newDatas = await GenerateChartDatas?.Invoke();
             await Chart.Clear();
             await Chart.AddLabels(newDatas.Select(x => x.Label).ToArray());
             
