@@ -120,20 +120,21 @@ namespace RadiocomDataViewApp.Components
                 PointBorderColor = colors,
                 PointRadius = 3.5f
             };
-            //newChartDataset.HoverBorderColor.Clear();
             CurrentDataset = newChartDataset;
             await Chart.AddDataSet(newChartDataset);
             await Chart.Update();
         }
         protected LineChartDataset<DashboardChartDatasetYValue> CurrentDataset { get; set; }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override  Task OnAfterRenderAsync(bool firstRender)
         {
-            await base.OnAfterRenderAsync(firstRender);
-            if (firstRender)
-            {
-                await RefreshChartData();
-            }
+            return base.OnAfterRenderAsync(firstRender).ContinueWith(x =>
+           InvokeAsync(async () => {
+               if (firstRender)
+               {
+                   await RefreshChartData();
+               }
+           })).Unwrap();
         }
 
         private string GetScaleFontColor()
