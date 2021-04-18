@@ -14,6 +14,7 @@ namespace RadiocomDataViewApp.Clients.Live
     public class LiveRadiocomArtistWorkRepository : IRadiocomArtistWorkRepository
     {
         private const string LOCALSTORAGEKEY_ARTISTWORK_INFO = "artistwork_info-";
+        private const string LOCALSTORAGEKEY_ARTISTARTISTWORK_INFO = "artistartistwork_info-";
         private readonly IRadiocomArtistRepository _radiocomArtistRepository;
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorageService;
@@ -83,9 +84,28 @@ namespace RadiocomDataViewApp.Clients.Live
             return result;
         }
 
-        public Task<IEnumerable<ArtistWorkInfo>> GetArtist_ArtistWorks(int artistId)
+        public async Task<IEnumerable<ArtistWorkInfo>> GetArtist_ArtistWorks(int artistId)
         {
-            throw new NotImplementedException();
+            List<ArtistWorkInfo> result;
+            string localStorageKey = LOCALSTORAGEKEY_ARTISTARTISTWORK_INFO + "all";
+            TimeCachedObject<List<ArtistWorkInfo>> cachedObject = await _localStorageService.GetItemAsync<TimeCachedObject<List<ArtistWorkInfo>>>(localStorageKey);
+            if (cachedObject == null || cachedObject.NextUpdateHour < DateTimeOffset.UtcNow)
+            {
+                result = (await GetArtistWorksAsync()).Where(x => x.ArtistInfo.Id == artistId).ToList();
+                DateTimeOffset nextUpdate = TimeCachedObject<object>.CalculateNextUpdateHour();
+                cachedObject = new TimeCachedObject<List<ArtistWorkInfo>>()
+                {
+                    CachedObject = result,
+                    NextUpdateHour = nextUpdate
+                };
+                await _localStorageService.SetItemAsync(localStorageKey, cachedObject);
+            }
+            else
+            {
+                result = cachedObject.CachedObject;
+            }
+
+            return result;
         }
 
         private class ArtistWorkInfosRequest
