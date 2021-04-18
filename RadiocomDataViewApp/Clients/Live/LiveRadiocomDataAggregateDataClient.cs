@@ -9,6 +9,7 @@ using Blazored.LocalStorage;
 using Newtonsoft.Json;
 using RadiocomDataViewApp.Interfaces;
 using RadiocomDataViewApp.Objects;
+using RadiocomDataViewApp.Objects.Dto;
 
 namespace RadiocomDataViewApp.Clients.Live
 {
@@ -26,6 +27,8 @@ namespace RadiocomDataViewApp.Clients.Live
 
         private const string LOCALSTORAGEKEY_ARTISTMOSTPLAYEDARTISTWORKS = "artistmostplayedartistworks-";
         private const string LOCALSTORAGEKEY_ARTISTARTISTWORKSPLAYED = "artistartistworksplayed-";
+        private const string LOCALSTORAGEKEY_ARTISTARTISTWORKSPLAYEDANDOTHERS = "artistartistworksplayedandothers-";
+
 
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorageService;
@@ -230,9 +233,51 @@ namespace RadiocomDataViewApp.Clients.Live
             return result;
         }
 
-        public Task<List<ItemCount>> GetSongPlayedAndOtherPlayed(AggregateTimeRange timeRange, int artistWorkId)
+        public async Task<List<ItemCount>> GetSongPlayedAndOtherPlayed(AggregateTimeRange timeRange, int artistWorkId)
         {
-            return Task.FromResult(new List<ItemCount>());
+            List<ItemCount> result = new List<ItemCount>();
+            
+            string localStorageKey = LOCALSTORAGEKEY_ARTISTARTISTWORKSPLAYEDANDOTHERS + artistWorkId + "-" + timeRange;
+            TimeCachedObject<List<ItemCount>> cachedObject = await _localStorageService.GetItemAsync<TimeCachedObject<List<ItemCount>>>(localStorageKey);
+            if (cachedObject == null || cachedObject.NextUpdateHour < DateTimeOffset.UtcNow)
+            {
+
+                ArtistInfo info = (await _radiocomArtistWorkRepository.GetArtistWorkAsync(artistWorkId)).ArtistInfo;
+                List<ItemCount> works = await GetArtistSongsPlayed(timeRange, info.Id);
+                long otherCount = works.Where(x => x.ItemId != artistWorkId).Sum(x => x.Count);
+                ItemCount work = works.FirstOrDefault(x => x.ItemId == artistWorkId);
+                if (work != null)
+                {
+                    result.Add(work);
+                }
+                else
+                {
+                    result.Add(new ItemCount()
+                    {
+                        Count = 0,
+                        ItemId = artistWorkId,
+                        Name = info.Name
+                    });
+                }
+                result.Add(new ItemCount()
+                {
+                    Count = otherCount,
+                    Name = "Other",
+                    ItemId = -1
+                });
+                DateTimeOffset nextUpdate = TimeCachedObject<object>.CalculateNextUpdateHour();
+                cachedObject = new TimeCachedObject<List<ItemCount>>()
+                {
+                    CachedObject = result,
+                    NextUpdateHour = nextUpdate
+                };
+                await _localStorageService.SetItemAsync(localStorageKey, cachedObject);
+            }
+            else
+            {
+                result = cachedObject.CachedObject;
+            }
+            return result;
         }
 
         public async Task<List<ItemCount>> GetSongPlayedOverTime(AggregateTimeRange timeRange, int artistWorkId)
