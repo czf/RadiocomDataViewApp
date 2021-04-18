@@ -25,6 +25,7 @@ namespace RadiocomDataViewApp.Clients.Live
         private const string LOCALSTORAGEKEY_MOSTPLAYEDARTISTS = "mostplayedartists-";
 
         private const string LOCALSTORAGEKEY_ARTISTMOSTPLAYEDARTISTWORKS = "artistmostplayedartistworks-";
+        private const string LOCALSTORAGEKEY_ARTISTARTISTWORKSPLAYED = "artistartistworksplayed-";
 
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorageService;
@@ -77,9 +78,41 @@ namespace RadiocomDataViewApp.Clients.Live
             }
             return result;
         }
-        public Task<List<ItemCount>> GetArtistSongsPlayed(AggregateTimeRange timeRange, int artistId)
+        public async Task<List<ItemCount>> GetArtistSongsPlayed(AggregateTimeRange timeRange, int artistId)
         {
-            return Task.FromResult(new List<ItemCount>());
+            List<ItemCount> result = new List<ItemCount>();
+
+            string localStorageKey = LOCALSTORAGEKEY_ARTISTARTISTWORKSPLAYED + artistId + "-" + timeRange;
+            TimeCachedObject<List<ItemCount>> cachedObject = await _localStorageService.GetItemAsync<TimeCachedObject<List<ItemCount>>>(localStorageKey);
+            if (cachedObject == null || cachedObject.NextUpdateHour < DateTimeOffset.UtcNow)
+            {
+                Artist_TopArtistWorkAggregatedEventsRequest request = new Artist_TopArtistWorkAggregatedEventsRequest() { ArtistId = artistId, TimeSeries = timeRange,  TopN = 100};
+                HttpResponseMessage responseMessage = await _httpClient.PostAsJsonAsync(_endpointAddress + "Artist_TopArtistWorkAggregatedEvents", request);
+                string responseBody = await responseMessage.Content.ReadAsStringAsync();
+                List<AggregatedEvent> temp = JsonConvert.DeserializeObject<List<AggregatedEvent>>(responseBody);
+                foreach (var work in temp)
+                {
+                    result.Add(new ItemCount()
+                    {
+                        Count = work.AggregatedEventSum,
+                        ItemId = work.Id,
+                        Name = (await _radiocomArtistWorkRepository.GetArtistWorkAsync(work.Id)).Name
+                    });
+                }
+                result = result.OrderByDescending(x => x.Count).ThenBy(x => x.Name).ToList();
+                DateTimeOffset nextUpdate = TimeCachedObject<object>.CalculateNextUpdateHour();
+                cachedObject = new TimeCachedObject<List<ItemCount>>()
+                {
+                    CachedObject = result,
+                    NextUpdateHour = nextUpdate
+                };
+                await _localStorageService.SetItemAsync(localStorageKey, cachedObject);
+            }
+            else
+            {
+                result = cachedObject.CachedObject;
+            }
+            return result;
         }
 
         public async Task<List<ItemCount>> GetMostPlayedArtistsAsync(AggregateTimeRange timeRange)
@@ -163,7 +196,6 @@ namespace RadiocomDataViewApp.Clients.Live
         public async Task<List<ItemCount>> GetMostPlayedSongsAsync(AggregateTimeRange timeRange, int artistId)
         {
             List<ItemCount> result = new List<ItemCount>();
-
 
             string localStorageKey = LOCALSTORAGEKEY_ARTISTMOSTPLAYEDARTISTWORKS + artistId + "-" + timeRange;
             TimeCachedObject<List<ItemCount>> cachedObject = await _localStorageService.GetItemAsync<TimeCachedObject<List<ItemCount>>>(localStorageKey);
@@ -291,7 +323,6 @@ namespace RadiocomDataViewApp.Clients.Live
             Dictionary<string, (ItemCount itemCount, DateTimeOffset sortOrder)> result = new Dictionary<string, (ItemCount itemCount, DateTimeOffset sortOrder)>();
             DateTimeOffset now = DateTimeOffset.UtcNow.Add(DateTimeOffset.Now.Offset);
             now = now.Subtract(new TimeSpan(now.Hour, now.Minute, now.Second));
-            Console.WriteLine(now);
             switch (timeRange)
             {
                 case AggregateTimeRange.None:
@@ -315,7 +346,6 @@ namespace RadiocomDataViewApp.Clients.Live
                     break;
                 case AggregateTimeRange.OneYear:
                     now = now.Subtract(TimeSpan.FromDays(now.Day - 1));
-                    Console.WriteLine("now: " + now);
                     for (int i = 0; i < 12; i++)
                     {
                         string name = GetOverTimeName(i, timeRange, now);
@@ -417,7 +447,7 @@ namespace RadiocomDataViewApp.Clients.Live
         private class Artist_TopArtistWorkAggregatedEventsRequest
         {
             public int ArtistId { get; set; }
-            public int TopN { get;  } = 6;
+            public int TopN { get; set; } = 6;
             public AggregateTimeRange TimeSeries { get; set; }
         }
         public class AggregatedEvent
