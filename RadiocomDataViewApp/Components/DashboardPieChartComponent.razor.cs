@@ -54,7 +54,12 @@ namespace RadiocomDataViewApp.Components
             List<string> colors = new List<string>();
             for (int i = 0; i < newDatas.Count(); i++)
             {
-                string sliceColor = SliceColorGenerator?.Invoke(i);
+                string sliceColor = null;
+                if (i < 9) 
+                {
+                    sliceColor = SliceColorGenerator?.Invoke(i); 
+                }
+
                 if (!string.IsNullOrWhiteSpace(sliceColor))
                 {
                     colors.Add(sliceColor);
@@ -75,13 +80,15 @@ namespace RadiocomDataViewApp.Components
             await Chart.AddDatasetsAndUpdate(newChartDataset);
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override Task OnAfterRenderAsync(bool firstRender)
         {
-            await base.OnAfterRenderAsync(firstRender);
-            if (firstRender)
-            {
-                await RefreshChartData();
-            }
+            return base.OnAfterRenderAsync(firstRender).ContinueWith(x =>
+            InvokeAsync(async () => {
+                if (firstRender)
+                {
+                    await RefreshChartData();
+                }
+            })).Unwrap();
         }
        
 
