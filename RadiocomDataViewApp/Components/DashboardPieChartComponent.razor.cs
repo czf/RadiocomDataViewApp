@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Blazorise.Charts;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using RadiocomDataViewApp.Objects;
 
 namespace RadiocomDataViewApp.Components
@@ -14,9 +15,13 @@ namespace RadiocomDataViewApp.Components
         private const string DEFAULT_SLICE_COLOR = "#FFF";
 
         private PieChart<long> Chart;
-        public  object ChartOptionsObj;
+
+        private object ChartOptionsObj;
+
+        private double CurrentAspectRatio = .75;
 
 
+        [Inject] public IJSRuntime JSRuntime { get; set; }
 
         [Parameter]
         public string ChartTitle { get; set; }
@@ -31,26 +36,38 @@ namespace RadiocomDataViewApp.Components
         /// </summary>
         [Parameter]
         public EventCallback<DashboardChartMouseEventArgs> OnDashboardPieChartClick { get; set; }
-
         public DashboardPieChartComponent()
         {
             #region chartOptions
-            ChartOptionsObj = new
-            {
-                Legend = new { Display = true },
-
-                AspectRatio = .75
-
-            };
+            ChartOptionsObj = new  { AspectRatio = CurrentAspectRatio };
             #endregion chartOptions
         }
 
+        public ValueTask UpdateAspectRatio(double aspectRatio)
+        {
+            return JSRuntime.InvokeVoidAsync("blazoriseCharts.setAspectRatio", Chart.ElementId, aspectRatio);
+        }
+
+        
         public async Task RefreshChartData()
         {
             IEnumerable<DashboardChartData> newDatas = await GenerateChartDatas.Invoke();
             await Chart.Clear();
             await Chart.AddLabels(newDatas.Select(x => x.Label).ToArray());
-
+            double newAspectRatio = CurrentAspectRatio;
+            if (newDatas.Count() > 10)
+            {
+                newAspectRatio = .5;
+            }
+            else
+            {
+                newAspectRatio = .75;
+            }
+            if (newAspectRatio != CurrentAspectRatio)
+            {
+                await UpdateAspectRatio(.5);
+                CurrentAspectRatio = newAspectRatio;
+            }
             List<string> colors = new List<string>();
             for (int i = 0; i < newDatas.Count(); i++)
             {

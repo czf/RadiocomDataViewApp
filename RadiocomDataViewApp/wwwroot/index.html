@@ -91,6 +91,15 @@
                 }
             });
         })();
+        window.blazoriseCharts.setAspectRatio = (canvasId, aspectRatio) => {
+			const chart = window.blazoriseCharts.getChart(canvasId);
+			if (chart) {
+                chart.aspectRatio = aspectRatio;
+                chart.options.aspectRatio = aspectRatio;
+                chart.update();
+                chart.resize();
+			}
+        };
     </script>
 </body>
 
