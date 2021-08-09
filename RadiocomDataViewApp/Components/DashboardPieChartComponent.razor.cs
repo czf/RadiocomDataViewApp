@@ -88,6 +88,21 @@ namespace RadiocomDataViewApp.Components
                 {
                     await RefreshChartData();
                 }
+
+                if(Chart.Data.Labels.Count > 7)
+                {
+                    ChartOptionsObj = new
+                    {
+                        Legend = new { Display = true },
+
+                        AspectRatio = .55
+
+                    };
+                    await Chart.SetOptionsObject(ChartOptionsObj);
+                    await Chart.Update();
+                    await Chart.Resize();
+                }
+
             })).Unwrap();
         }
        
